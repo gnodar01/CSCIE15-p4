@@ -17,7 +17,7 @@ class TasksTableSeeder extends Seeder
             ['Watah', 'Bring water'],
             ['Playlist', 'Set up a new running playlist'],
             ['Cooking Supplies', 'Burner, grill, charcol/wood chips, lighter, tin foil'],
-            ['Food', 'Steaks, Veggies']
+            ['Food', 'Steaks, Veggies'],
             ['Alcohol', 'Beer and wine'],
             ['Champagne', 'Just in case ;)'],
             ['Phone charger', 'Just in case']
@@ -26,7 +26,7 @@ class TasksTableSeeder extends Seeder
         $count = count($tasks);
         
         foreach ($tasks as $key => $task) {
-            Seeder::insert([
+            Task::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $task[0],

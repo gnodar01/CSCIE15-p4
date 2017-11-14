@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
         $roles = [
             ['Guide', 'Know the trails, be the trails'],
             ['Chef', 'Cook the food and feed us'],
-            ['Fire Starter', 'Only you can prevent forest fires']
+            ['Fire Starter', 'Only you can prevent forest fires'],
             ['Musician', 'Bring your guitar!'],
             ['Designated Driver', 'Or pay for the Uber']
         ];
