@@ -19,7 +19,7 @@ class GroupsTableSeeder extends Seeder
         $count = count($groups);
         
         foreach ($groups as $key => $group) {
-            Book::insert([
+            Group::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $group[0],

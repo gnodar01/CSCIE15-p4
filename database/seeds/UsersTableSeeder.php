@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
         $count = count($users);
         
         foreach ($users as $key => $user) {
-            Book::insert([
+            User::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $user[0],

@@ -21,7 +21,7 @@ class ActivitiesTableSeeder extends Seeder
         $count = count($activities);
         
         foreach ($activities as $key => $activity) {
-            Book::insert([
+            Activity::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $activity[0],

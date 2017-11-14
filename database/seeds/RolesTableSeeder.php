@@ -23,7 +23,7 @@ class RolesTableSeeder extends Seeder
         $count = count($roles);
         
         foreach ($roles as $key => $role) {
-            Book::insert([
+            Role::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $role[0],

@@ -26,7 +26,7 @@ class TasksTableSeeder extends Seeder
         $count = count($tasks);
         
         foreach ($tasks as $key => $task) {
-            Book::insert([
+            Seeder::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $task[0],
