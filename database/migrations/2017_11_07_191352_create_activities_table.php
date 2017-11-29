@@ -22,7 +22,7 @@ class CreateActivitiesTable extends Migration
             $table->time('time_end')->nullable();
             $table->text('description');
             $table->string('location')->nullable();
-            $table->binary('image')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
