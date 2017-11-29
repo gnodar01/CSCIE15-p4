@@ -13,6 +13,7 @@ class ActivitiesTableSeeder extends Seeder
     public function run()
     {
         $activities = [
+            ['Hiking', '11-07-2017', '11-07-2017', '08:00:00', '14:00:00', 'Hike before thanksgiving', 'pre-turkey hike'],
             ['Fun Run', '12-01-2017', '12-01-2017', '08:00:00', '15:00:00', 'A Fun Run in the sun (but cold)', 'Da Trak'],
             ['Camping Trip', '04-08-2018', '04-10-2018', '08:00:00', '22:00:00', 'Just friends and nature', 'nature'],
             ['New Years Celebration', '12-31-2017', '01-01-2018', '20:00:00', '02:00:00', 'Celebrate the new year!', 'Around downtown']

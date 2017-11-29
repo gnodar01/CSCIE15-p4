@@ -1,18 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', 'ActivitusController@index');
-
 // debug info for database
 Route::get('/debug', function () {
 
@@ -40,3 +27,14 @@ Route::get('/debug', function () {
 
     dump($debug);
 });
+
+// View activity
+Route::get('/activity/{id}', 'ActivitusController@activity');
+
+// Edit activity
+Route::get('/activity/{id}/edit', 'ActivitusController@edit');
+Route::put('/activity/{id}', 'ActivitusController@update');
+
+// View all activities
+Route::get('/', 'ActivitusController@index');
+Route::get('/activity', 'ActivitusController@index');
