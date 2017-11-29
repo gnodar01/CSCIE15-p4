@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use App\Activity;
 
 class ActivitusController extends Controller
 {
@@ -15,6 +16,12 @@ class ActivitusController extends Controller
      * @return main Digest view
      */
     public function index() {
-        return view('activitus.index');
+        $activities = Activity::all();
+
+        echo $activities;
+
+        return view('activitus.index')->with([
+            'activities' => $activities
+        ]);
     }
 }
