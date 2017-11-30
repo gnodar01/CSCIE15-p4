@@ -31,6 +31,10 @@ Route::get('/debug', function () {
 // View activity
 Route::get('/activity/{id}', 'ActivitusController@activity');
 
+// Create activity
+Route::get('/activity/{id}/create', 'ActivitusController@create');
+Route::put('/activity/{id}', 'ActivitusController@add');
+
 // Edit activity
 Route::get('/activity/{id}/edit', 'ActivitusController@edit');
 Route::put('/activity/{id}', 'ActivitusController@update');

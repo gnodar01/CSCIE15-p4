@@ -4,9 +4,7 @@
 @endpush
 
 @section('content')
-    <h1>Activitus</h1>
-
-    <h2>Activities</h2>
+    <h1>Activities</h1>
 
     @if(isset($activities))
     @foreach($activities as $activity)

@@ -7,8 +7,9 @@
         <meta name="author" content="Nodari Gogoberidze">
         <meta charset='utf-8'>
 
-        <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
         <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+        <link href="/css/activitus.css" type='text/css' rel='stylesheet'>
         @stack('head')
 
         <title>
@@ -22,7 +23,21 @@
             </div>
             <br>
         @endif
-        @yield('content')
+
+        <header>
+            <h1 class="display-1">Activitus</h1>
+
+            <nav>
+                <ul>
+                    <li><a href='/activity'>All Activties</a>
+                    <li><a href='/activity/create'>Add an Activity</a>
+                </ul>
+            </nav>
+        </header>
+
+        <section>
+            @yield('content')
+        </section>
         @stack('js')
     </body>
 </html>
