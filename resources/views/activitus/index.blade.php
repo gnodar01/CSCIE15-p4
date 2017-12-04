@@ -19,4 +19,9 @@
         </div>
     @endforeach
     @endif
+
+    @if(!strpos($path, 'archive'))
+    <br>
+    <a href="/activity/archive">Vew Expired Activities</a>
+    @endif
 @endsection

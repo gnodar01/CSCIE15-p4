@@ -40,8 +40,11 @@ Route::put('/activity/{id}', 'ActivitusController@update');
 Route::get('/activity/{id}/delete', 'ActivitusController@confirmDelete');
 Route::delete('/activity/{id}', 'ActivitusController@delete');
 
-// View all activities
+// View all upcoming activities
 Route::get('/activity', 'ActivitusController@index');
+
+// View all activities
+Route::get('/activity/archive', 'ActivitusController@archive');
 
 // View activity
 Route::get('/activity/{id}', 'ActivitusController@activity');

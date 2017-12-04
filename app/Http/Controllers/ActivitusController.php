@@ -12,13 +12,29 @@ class ActivitusController extends Controller
     /**
      * GET
      * /
+     * /activity
      * Show all activities
      */
-    public function index() {
+    public function index(Request $request) {
         $activities = Activity::whereDate('date_start', '>=', date('Y-m-d'))->get();
 
         return view('activitus.index')->with([
-            'activities' => $activities
+            'activities' => $activities,
+            'path' => $request->path()
+        ]);
+    }
+
+    /**
+     * GET
+     * /activity/archive
+     * Show all activities
+     */
+    public function archive(Request $request) {
+        $activities = Activity::all();
+
+        return view('activitus.index')->with([
+            'activities' => $activities,
+            'path' => $request->path()
         ]);
     }
 
