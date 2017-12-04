@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @push('head')
-    <link href="/css/activitus.css" type='text/css' rel='stylesheet'>
 @endpush
 
 @section('content')

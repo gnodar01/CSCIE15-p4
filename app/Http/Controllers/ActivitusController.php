@@ -28,8 +28,6 @@ class ActivitusController extends Controller
     * Show info for given activity
     */
     public function activity($id) {
-        // TODO: if activity exists
-
         $activity = Activity::find($id);
 
         if (!$activity) {
@@ -37,6 +35,45 @@ class ActivitusController extends Controller
         }
 
         return view('activitus.activity')->with('activity', $activity);
+    }
+
+    /**
+    * GET
+    * /activity/create
+    * Create an activity
+    */
+    public function create() {
+        return view('activitus.create');
+    }
+
+    /**
+    * POST
+    * /activity
+    * Add new activity
+    */
+    public function add(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'date-start' => 'required',
+            'date-end' => 'required'
+        ]);
+
+        $activity = new Activity();
+        $activity->name = $request->input('name');
+        $activity->description = $request->input('description');
+        $activity->location = $request->input('location');
+        $activity->date_start = $request->input('date-start');
+        $activity->date_end = $request->input('date-end');
+        $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
+        $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
+        $activity->save();
+
+        return redirect('/activity/'.$activity->id)->with([
+            'activity' => $activity,
+            'alert' => 'Your activity was added.'
+        ]);
     }
 
     /**
