@@ -36,9 +36,15 @@ Route::post('/activity', 'ActivitusController@add');
 Route::get('/activity/{id}/edit', 'ActivitusController@edit');
 Route::put('/activity/{id}', 'ActivitusController@update');
 
+// Delete activity
+Route::get('/activity/{id}/delete', 'ActivitusController@confirmDelete');
+Route::delete('/activity/{id}', 'ActivitusController@delete');
+
+// View all activities
+Route::get('/activity', 'ActivitusController@index');
+
 // View activity
 Route::get('/activity/{id}', 'ActivitusController@activity');
 
 // View all activities
 Route::get('/', 'ActivitusController@index');
-Route::get('/activity', 'ActivitusController@index');

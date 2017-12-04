@@ -14,7 +14,7 @@
             <div class="activity-actions">
                 <a href="/activity/{{ $activity['id'] }}">View</a> |
                 <a href="/activity/{{ $activity['id'] }}/edit">Edit</a> |
-                <a href="">Delete</a>
+                <a href="/activity/{{ $activity['id'] }}/delete">Delete</a>
             </div>
         </div>
     @endforeach

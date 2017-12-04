@@ -125,4 +125,38 @@ class ActivitusController extends Controller
             'alert' => 'Your changes were saved.'
         ]);
     }
+
+    /**
+    * GET
+    * /activity/{id}/delete
+    * Confirm deletion of given activity
+    */
+    public function confirmDelete($id) {
+        $activity = Activity::find($id);
+
+        if (!$activity) {
+            return redirect('/')->with('alert', 'Activity not found');
+        }
+
+        return view('activitus.delete')->with('activity', $activity);
+    }
+
+    /**
+    * DELETE
+    * /activity/{id}
+    * Delete a given activity
+    */
+    public function delete($id) {
+        $activity = Activity::find($id);
+
+        if (!$activity) {
+            return redirect('/')->with('alert', 'Activity not found');
+        }
+
+        $activity->delete();
+
+        return redirect('/activity')->with([
+            'alert' => $activity->name.' was deleted.'
+        ]);
+    }
 }
