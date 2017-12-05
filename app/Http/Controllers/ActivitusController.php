@@ -156,7 +156,7 @@ class ActivitusController extends Controller
 
         return view('activitus.delete')->with([
             'activity' => $activity,
-            'prevUrl' => url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? '/activity' : url()->previous()
         ]);
     }
 
