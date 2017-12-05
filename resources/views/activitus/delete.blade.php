@@ -15,6 +15,7 @@
         <div>Are you sure you want to delete {{ $activity->name }}?</div>
         
         <input type='submit' value='Delete' class='btn btn-danger btn-small'>
-        <a href='/activity' class='btn btn-secondary btn-small'>Cancel</a>
+        <a href='{{$prevUrl}}' class='btn btn-secondary btn-small'>Cancel</a>
+        
     </form>
 @endsection

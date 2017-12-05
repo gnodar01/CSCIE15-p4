@@ -154,7 +154,10 @@ class ActivitusController extends Controller
             return redirect('/')->with('alert', 'Activity not found');
         }
 
-        return view('activitus.delete')->with('activity', $activity);
+        return view('activitus.delete')->with([
+            'activity' => $activity,
+            'prevUrl' => url()->previous()
+        ]);
     }
 
     /**
