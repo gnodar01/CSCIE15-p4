@@ -8,7 +8,7 @@ class Activity extends Model
 {
     protected $table = 'activities';
 
-    public function activities()
+    public function group()
     {
         # many-to-one
         return $this->belongsTo('App\Group');
