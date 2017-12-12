@@ -69,6 +69,9 @@ Route::put('/group/{id}', 'GroupsController@update');
 Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
 Route::delete('/group/{id}', 'GroupsController@delete');
 
+// View group with expired activities
+Route::get('/group/{id}/archive', 'GroupsController@archive');
+
 // View group
 Route::get('/group/{id}', 'GroupsController@group');
 

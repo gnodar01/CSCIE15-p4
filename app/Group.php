@@ -8,7 +8,11 @@ class Group extends Model
 {
     public function activities()
     {
-        # one-to-many
+        return $this->hasMany('App\Activity')->whereDate('date_start', '>=', date('Y-m-d'));
+    }
+
+    public function allActivities()
+    {
         return $this->hasMany('App\Activity');
     }
 

@@ -26,7 +26,7 @@ class GroupsController extends Controller
     * /group/{id}
     * Show info for given group
     */
-    public function group($id) {
+    public function group($id, Request $request) {
         $group = Group::find($id);
 
         if (!$group) {
@@ -37,7 +37,29 @@ class GroupsController extends Controller
 
         return view('groups.group')->with([
             'group' => $group,
-            'activities' => $activities
+            'activities' => $activities,
+            'path' => $request->path()
+        ]);
+    }
+
+    /**
+    * GET
+    * /group/{id}/archive
+    * Show info for given group with expired activities
+    */
+    public function archive($id, Request $request) {
+        $group = Group::find($id);
+
+        if (!$group) {
+            return redirect('/group')->with('alert', 'Group not found');
+        }
+
+        $activities = $group->allActivities()->getResults();
+
+        return view('groups.group')->with([
+            'group' => $group,
+            'activities' => $activities,
+            'path' => $request->path()
         ]);
     }
 
