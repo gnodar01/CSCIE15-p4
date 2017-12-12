@@ -34,10 +34,12 @@ class GroupsController extends Controller
         }
 
         $activities = $group->activities()->getResults();
+        $users = $group->users()->getResults();
 
         return view('groups.group')->with([
             'group' => $group,
             'activities' => $activities,
+            'users' => $users,
             'path' => $request->path()
         ]);
     }
@@ -55,10 +57,12 @@ class GroupsController extends Controller
         }
 
         $activities = $group->allActivities()->getResults();
+        $users = $group->users()->getResults();
 
         return view('groups.group')->with([
             'group' => $group,
             'activities' => $activities,
+            'users' => $users,
             'path' => $request->path()
         ]);
     }

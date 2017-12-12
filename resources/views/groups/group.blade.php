@@ -18,6 +18,16 @@
         </div>
     </div>
 
+    @if(isset($users))
+    <br>
+    <h2>Group Members</h2>
+    @foreach($users as $user)
+        <div class="user">
+            {{ $user['name'] }}
+        </div>
+    @endforeach
+    @endif
+
     @if(isset($activities))
     <br>
     <h2>Activities</h2>
