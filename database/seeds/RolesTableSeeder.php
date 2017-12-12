@@ -17,9 +17,9 @@ class RolesTableSeeder extends Seeder
         $roles = [
             ['Guide', 'Billy Bob', 'Hiking', 'Know the trails, be the trails'],
             ['Chef', 'Yin Yang', 'Camping Trip', 'Cook the food and feed us'],
-            ['Fire Starter', 'Camping Trip', 'Sally Sue', 'Only you can prevent forest fires'],
-            ['Musician', 'Camping Trip', 'Yonny Yoman', 'Bring your guitar!'],
-            ['Designated Driver', 'New Years Celebration', 'Craig Church', 'Or pay for the Uber'],
+            ['Fire Starter', 'Sally Sue', 'Camping Trip', 'Only you can prevent forest fires'],
+            ['Musician', 'Yonny Yoman', 'Camping Trip', 'Bring your guitar!'],
+            ['Designated Driver', 'Craig Church', 'New Years Celebration', 'Or pay for the Uber'],
         ];
 
         $count = count($roles);
