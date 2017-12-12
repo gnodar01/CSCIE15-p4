@@ -10,7 +10,11 @@ class Activity extends Model
 
     public function group()
     {
-        # many-to-one
         return $this->belongsTo('App\Group');
+    }
+
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task')->withTimestamps();
     }
 }
