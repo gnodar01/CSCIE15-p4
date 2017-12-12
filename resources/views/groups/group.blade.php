@@ -34,9 +34,11 @@
     @endforeach
     @endif
 
-    @if(!strpos($path, 'archive'))
     <br>
+    @if(!strpos($path, 'archive'))
     <a href="/group/{{$group['id']}}/archive">Vew Expired Activities</a>
+    @else
+    <a href="/group/{{$group['id']}}">Hide Expired Activities</a>
     @endif
 
 @endsection
