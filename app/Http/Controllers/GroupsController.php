@@ -34,10 +34,8 @@ class GroupsController extends Controller
         }
 
         if (!$archive) {
-            // show only upcoming activities
-            $activities = $group->activities()->whereDate('date_start', '>=', date('Y-m-d'))->getResults();
+            $activities = $group->upcomingActivities()->getResults();
         } else {
-            // show all activities, including expired
             $activities = $group->activities()->getResults();
         }
 
