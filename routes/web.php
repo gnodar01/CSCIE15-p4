@@ -29,25 +29,25 @@ Route::get('/debug', function () {
 });
 
 // Create activity
-Route::get('/activity/create', 'ActivitusController@create');
-Route::post('/activity', 'ActivitusController@add');
+Route::get('/activity/create', 'ActivitiesController@create');
+Route::post('/activity', 'ActivitiesController@add');
 
 // Edit activity
-Route::get('/activity/{id}/edit', 'ActivitusController@edit');
-Route::put('/activity/{id}', 'ActivitusController@update');
+Route::get('/activity/{id}/edit', 'ActivitiesController@edit');
+Route::put('/activity/{id}', 'ActivitiesController@update');
 
 // Delete activity
-Route::get('/activity/{id}/delete', 'ActivitusController@confirmDelete');
-Route::delete('/activity/{id}', 'ActivitusController@delete');
+Route::get('/activity/{id}/delete', 'ActivitiesController@confirmDelete');
+Route::delete('/activity/{id}', 'ActivitiesController@delete');
 
 // View all upcoming activities
-Route::get('/activity', 'ActivitusController@index');
+Route::get('/activity', 'ActivitiesController@index');
 
 // View all activities
-Route::get('/activity/archive', 'ActivitusController@archive');
+Route::get('/activity/archive', 'ActivitiesController@archive');
 
 // View activity
-Route::get('/activity/{id}', 'ActivitusController@activity');
+Route::get('/activity/{id}', 'ActivitiesController@activity');
 
 // View all activities
-Route::get('/', 'ActivitusController@index');
+Route::get('/', 'ActivitiesController@index');

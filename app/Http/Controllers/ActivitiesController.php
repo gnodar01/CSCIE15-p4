@@ -7,7 +7,7 @@ use App;
 use App\Activity;
 use Debugbar;
 
-class ActivitusController extends Controller
+class ActivitiesController extends Controller
 {
     /**
      * GET
@@ -18,7 +18,7 @@ class ActivitusController extends Controller
     public function index(Request $request) {
         $activities = Activity::whereDate('date_start', '>=', date('Y-m-d'))->get();
 
-        return view('activitus.index')->with([
+        return view('activities.index')->with([
             'activities' => $activities,
             'path' => $request->path()
         ]);
@@ -32,7 +32,7 @@ class ActivitusController extends Controller
     public function archive(Request $request) {
         $activities = Activity::all();
 
-        return view('activitus.index')->with([
+        return view('activities.index')->with([
             'activities' => $activities,
             'path' => $request->path()
         ]);
@@ -50,7 +50,7 @@ class ActivitusController extends Controller
             return redirect('/')->with('alert', 'Activity not found');
         }
 
-        return view('activitus.activity')->with('activity', $activity);
+        return view('activities.activity')->with('activity', $activity);
     }
 
     /**
@@ -59,7 +59,7 @@ class ActivitusController extends Controller
     * Create an activity
     */
     public function create() {
-        return view('activitus.create');
+        return view('activities.create');
     }
 
     /**
@@ -104,7 +104,7 @@ class ActivitusController extends Controller
             return redirect('/')->with('alert', 'Activity not found');
         }
 
-        return view('activitus.edit')->with('activity', $activity);
+        return view('activities.edit')->with('activity', $activity);
     }
 
     /**
@@ -154,7 +154,7 @@ class ActivitusController extends Controller
             return redirect('/')->with('alert', 'Activity not found');
         }
 
-        return view('activitus.delete')->with([
+        return view('activities.delete')->with([
             'activity' => $activity,
             'prevUrl' => url()->previous() == url()->current() ? '/activity' : url()->previous()
         ]);
