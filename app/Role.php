@@ -10,4 +10,9 @@ class Role extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function activity()
+    {
+        return $this->belongsTo('App\Activity');
+    }
 }

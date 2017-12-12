@@ -17,4 +17,9 @@ class Activity extends Model
     {
         return $this->belongsToMany('App\Task')->withTimestamps();
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role')->withTimestamps();
+    }
 }
