@@ -32,6 +32,8 @@
             Task: {{ $task['name']}}
             <br>
             Description: {{ $task['description'] }}
+            <br>
+            Owner: {{ $task->user->name }}
         </div>
         <br>
     @endif
@@ -44,6 +46,8 @@
             Role: {{ $role['name']}}
             <br>
             Description: {{ $role['description'] }}
+            <br>
+            Owner: {{ $role->user->name }}
         </div>
         <br>
     @endforeach
