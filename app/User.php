@@ -35,11 +35,11 @@ class User extends Authenticatable
 
     public function tasks()
     {
-        return $this->belongsToMany('App\Task')->withTimestamps();
+        return $this->hasMany('App\Task');
     }
 
     public function roles()
     {
-        return $this->belongsToMany('App\Role')->withTimestamps();
+        return $this->hasMany('App\Role');
     }
 }
