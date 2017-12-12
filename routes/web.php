@@ -44,6 +44,9 @@ Route::put('/activity/{id}', 'ActivitiesController@update');
 Route::get('/activity/{id}/delete', 'ActivitiesController@confirmDelete');
 Route::delete('/activity/{id}', 'ActivitiesController@delete');
 
+// View all activities, including expired
+Route::get('/activity/archive', 'ActivitiesController@archive');
+
 // View activity
 Route::get('/activity/{id}', 'ActivitiesController@activity');
 

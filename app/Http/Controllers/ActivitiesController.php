@@ -26,7 +26,7 @@ class ActivitiesController extends Controller
 
     /**
      * GET
-     * /activity/{id}/archive
+     * /activity/archive
      * Show all activities, including expired ones, for given group
      */
     public function archive(Request $request) {
