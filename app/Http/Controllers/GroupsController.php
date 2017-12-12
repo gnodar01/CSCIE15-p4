@@ -47,31 +47,23 @@ class GroupsController extends Controller
 
     /**
     * POST
-    * /activity
-    * Add new activity
+    * /group
+    * Add new group
     */
     public function add(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'date-start' => 'required',
-            'date-end' => 'required'
+            'description' => 'required'
         ]);
 
-        $activity = new Activity();
-        $activity->name = $request->input('name');
-        $activity->description = $request->input('description');
-        $activity->location = $request->input('location');
-        $activity->date_start = $request->input('date-start');
-        $activity->date_end = $request->input('date-end');
-        $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-        $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-        $activity->save();
+        $group = new Group();
+        $group->name = $request->input('name');
+        $group->description = $request->input('description');
+        $group->save();
 
-        return redirect('/activity/'.$activity->id)->with([
-            'activity' => $activity,
-            'alert' => 'Your activity was added.'
+        return redirect('/group/'.$group->id)->with([
+            'group' => $group,
+            'alert' => 'Your group was created.'
         ]);
     }
 
