@@ -11,4 +11,10 @@ class Group extends Model
         # one-to-many
         return $this->hasMany('App\Activity');
     }
+
+    public function users()
+    {
+        # With timetsamps() will ensure the pivot table has its created_at/updated_at fields automatically maintained
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
 }
