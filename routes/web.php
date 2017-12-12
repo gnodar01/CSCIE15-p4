@@ -28,6 +28,10 @@ Route::get('/debug', function () {
     dump($debug);
 });
 
+/*
+ * Activities
+ */
+
 // Create activity
 Route::get('/activity/create', 'ActivitiesController@create');
 Route::post('/activity', 'ActivitiesController@add');
@@ -40,14 +44,21 @@ Route::put('/activity/{id}', 'ActivitiesController@update');
 Route::get('/activity/{id}/delete', 'ActivitiesController@confirmDelete');
 Route::delete('/activity/{id}', 'ActivitiesController@delete');
 
+// View activity
+Route::get('/activity/{id}', 'ActivitiesController@activity');
+
 // View all upcoming activities
 Route::get('/activity', 'ActivitiesController@index');
 
 // View all activities
 Route::get('/activity/archive', 'ActivitiesController@archive');
 
-// View activity
-Route::get('/activity/{id}', 'ActivitiesController@activity');
+/*
+ * GROUPS
+ */
 
-// View all activities
-Route::get('/', 'ActivitiesController@index');
+// View all groups
+Route::get('/activity', 'ActivitiesController@index');
+
+// View all groups
+Route::get('/', 'GroupsController@index');
