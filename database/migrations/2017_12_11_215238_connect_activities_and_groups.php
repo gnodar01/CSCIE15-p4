@@ -17,7 +17,7 @@ class ConnectActivitiesAndGroups extends Migration
 
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('activities', function (Blueprint $table) {
             # tablename + fk field name + the word "foreign"
             $table->dropForeign('activities_group_id_foreign');
             $table->dropColumn('group_id');
