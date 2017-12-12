@@ -19,7 +19,7 @@ class TasksTableSeeder extends Seeder
             ['Playlist', 'Kelly Klarkson', 'Set up a new running playlist'],
             ['Cooking Supplies', 'Yin Yang', 'Burner, grill, charcol/wood chips, lighter, tin foil'],
             ['Food', 'Yonny Yoman', 'Steaks, Veggies'],
-            ['Alcohol', 'username', 'Beer and wine'],
+            ['Alcohol', 'Billy Bob', 'Beer and wine'],
             ['Champagne', 'Craig Church', 'Just in case ;)'],
             ['Phone charger', 'Lucy Lee', 'Just in case'],
             ['Poppers', 'Zak Zebra', 'Those things that shoot confetti when you pull the string']
