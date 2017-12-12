@@ -57,8 +57,11 @@ Route::get('/activity/archive', 'ActivitiesController@archive');
  * GROUPS
  */
 
+// View group
+Route::get('/group/{id}', 'GroupsController@group');
+
 // View all groups
-Route::get('/activity', 'ActivitiesController@index');
+Route::get('/group', 'GroupsController@index');
 
 // View all groups
 Route::get('/', 'GroupsController@index');

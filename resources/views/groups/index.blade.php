@@ -9,9 +9,9 @@
     @if(isset($groups))
     @foreach($groups as $group)
         <br>
-        <div class="activity">
+        <div class="group">
             {{ $group['name'] }}
-            <div class="activity-actions">
+            <div class="group-actions">
                 <a href="/group/{{ $group['id'] }}">View</a> |
                 <a href="/group/{{ $group['id'] }}/edit">Edit</a> |
                 <a href="/group/{{ $group['id'] }}/delete">Delete</a>
