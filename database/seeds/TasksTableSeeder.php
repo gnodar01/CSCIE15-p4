@@ -15,7 +15,7 @@ class TasksTableSeeder extends Seeder
     {
         $tasks = [
             ['Sneeks', 'Billy Bob', 'Get new sneakers'],
-            ['Watah', 'Saylly Sue', 'Bring water'],
+            ['Watah', 'Sally Sue', 'Bring water'],
             ['Playlist', 'Kelly Klarkson', 'Set up a new running playlist'],
             ['Cooking Supplies', 'Yin Yang', 'Burner, grill, charcol/wood chips, lighter, tin foil'],
             ['Food', 'Yonny Yoman', 'Steaks, Veggies'],
@@ -28,8 +28,8 @@ class TasksTableSeeder extends Seeder
         $count = count($tasks);
         
         foreach ($tasks as $key => $task) {
-            $user = $task[1];
-            $user_id = User::where('name', '=', $user)->pluck('id')->first();
+            $username = $task[1];
+            $user_id = User::where('name', '=', $username)->pluck('id')->first();
 
             Task::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),

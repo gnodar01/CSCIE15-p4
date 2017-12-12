@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
         $users = [
             ['Billy Bob', 'Billy@gmail.com', 'billyisawesome'],
             ['Craig Church', 'Craig@gmail.com', '123pass'],
-            ['Saylly Sue', 'Sally@gmail.com', 'tiemyshoe'],
+            ['Sally Sue', 'Sally@gmail.com', 'tiemyshoe'],
             ['Kelly Klarkson', 'Kelly@gmail.com', 'keller!'],
             ['Lucy Lee', 'Lucy@gmail.com', 'lucylovesu@'],
             ['Yin Yang', 'YangYin@gmail.com', 'yingyangyo'],

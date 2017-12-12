@@ -11,7 +11,7 @@ class GroupUserTableSeeder extends Seeder
         $users =[
             'Billy Bob' => ['Outside Activities', 'Happy Fun Time'],
             'Craig Church' => ['Happy Fun Time'],
-            'Saylly Sue' => ['Outside Activities'],
+            'Sally Sue' => ['Outside Activities'],
             'Kelly Klarkson' => ['Outside Activities', 'Happy Fun Time'],
             'Lucy Lee' => ['Happy Fun Time'],
             'Yin Yang' => ['Outside Activities'],
