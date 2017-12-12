@@ -34,8 +34,10 @@ class GroupsController extends Controller
         }
 
         if (!$archive) {
+            // only upcoming activities
             $activities = $group->upcomingActivities()->getResults();
         } else {
+            // all activities, including expired
             $activities = $group->activities()->getResults();
         }
 
