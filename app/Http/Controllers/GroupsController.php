@@ -69,17 +69,17 @@ class GroupsController extends Controller
 
     /**
     * GET
-    * /activity/{id}/edit
-    * Edit info for given activity
+    * /group/{id}/edit
+    * Edit info for given group
     */
     public function edit($id) {
-        $activity = Activity::find($id);
+        $group = Group::find($id);
 
-        if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+        if (!$group) {
+            return redirect('/')->with('alert', 'Group not found');
         }
 
-        return view('activities.edit')->with('activity', $activity);
+        return view('groups.edit')->with('group', $group);
     }
 
     /**
