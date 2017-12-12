@@ -30,10 +30,15 @@ class GroupsController extends Controller
         $group = Group::find($id);
 
         if (!$group) {
-            return redirect('/')->with('alert', 'Group not found');
+            return redirect('/group')->with('alert', 'Group not found');
         }
 
-        return view('groups.group')->with('group', $group);
+        $activities = $group->activities()->getResults();
+
+        return view('groups.group')->with([
+            'group' => $group,
+            'activities' => $activities
+        ]);
     }
 
     /**
