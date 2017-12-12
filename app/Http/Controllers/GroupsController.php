@@ -84,35 +84,27 @@ class GroupsController extends Controller
 
     /**
     * PUT
-    * /activity/{id}
-    * Update info for given activity
+    * /group/{id}
+    * Update info for given group
     */
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'date-start' => 'required',
-            'date-end' => 'required'
+            'description' => 'required'
         ]);
 
-        $activity = Activity::find($id);
+        $group = Group::find($id);
 
-        if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+        if (!$group) {
+            return redirect('/')->with('alert', 'Group not found');
         }        
 
-        $activity->name = $request->input('name');
-        $activity->description = $request->input('description');
-        $activity->location = $request->input('location');
-        $activity->date_start = $request->input('date-start');
-        $activity->date_end = $request->input('date-end');
-        $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-        $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-        $activity->save();
+        $group->name = $request->input('name');
+        $group->description = $request->input('description');
+        $group->save();
 
-        return redirect('/activity/'.$id)->with([
-            'activity' => $activity,
+        return redirect('/group/'.$id)->with([
+            'gorup' => $group,
             'alert' => 'Your changes were saved.'
         ]);
     }
