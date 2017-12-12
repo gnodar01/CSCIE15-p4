@@ -22,4 +22,30 @@
             <a href="/activity/{{ $activity['id'] }}/delete">Delete</a>
         </div>
     </div>
+
+    @if(isset($tasks))
+    <br>
+    <h2>Tasks</h2>
+    @foreach($tasks as $task)
+    @endforeach
+        <div class="task">
+            Task: {{ $task['name']}}
+            <br>
+            Description: {{ $task['description'] }}
+        </div>
+        <br>
+    @endif
+
+    @if(isset($roles))
+    <br>
+    <h2>Roles</h2>
+    @foreach($roles as $role)
+        <div class="role">
+            Role: {{ $role['name']}}
+            <br>
+            Description: {{ $role['description'] }}
+        </div>
+        <br>
+    @endforeach
+    @endif
 @endsection

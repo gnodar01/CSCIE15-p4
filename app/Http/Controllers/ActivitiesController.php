@@ -50,7 +50,14 @@ class ActivitiesController extends Controller
             return redirect('/')->with('alert', 'Activity not found');
         }
 
-        return view('activities.activity')->with('activity', $activity);
+        $roles = $activity->roles()->getResults();
+        $tasks = $activity->tasks()->getResults();
+
+        return view('activities.activity')->with([
+            'activity' => $activity,
+            'roles' => $roles,
+            'tasks' => $tasks
+        ]);
     }
 
     /**
