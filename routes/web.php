@@ -57,11 +57,27 @@ Route::get('/activity/archive', 'ActivitiesController@archive');
  * GROUPS
  */
 
+// Create group
+Route::get('/group/create', 'GroupsController@create');
+Route::post('/group', 'GroupsController@add');
+
+// Edit group
+Route::get('/group/{id}/edit', 'GroupsController@edit');
+Route::put('/group/{id}', 'GroupsController@update');
+
+// Delete group
+Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
+Route::delete('/group/{id}', 'GroupsController@delete');
+
 // View group
 Route::get('/group/{id}', 'GroupsController@group');
 
 // View all groups
 Route::get('/group', 'GroupsController@index');
+
+/*
+ * Index
+ */
 
 // View all groups
 Route::get('/', 'GroupsController@index');
