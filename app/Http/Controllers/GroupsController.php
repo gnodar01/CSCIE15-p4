@@ -111,38 +111,38 @@ class GroupsController extends Controller
 
     /**
     * GET
-    * /activity/{id}/delete
-    * Confirm deletion of given activity
+    * /group/{id}/delete
+    * Confirm deletion of given group
     */
     public function confirmDelete($id) {
-        $activity = Activity::find($id);
+        $group = Group::find($id);
 
-        if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+        if (!$group) {
+            return redirect('/')->with('alert', 'Group not found');
         }
 
-        return view('activities.delete')->with([
-            'activity' => $activity,
-            'prevUrl' => url()->previous() == url()->current() ? '/activity' : url()->previous()
+        return view('groups.delete')->with([
+            'group' => $group,
+            'prevUrl' => url()->previous() == url()->current() ? '/group' : url()->previous()
         ]);
     }
 
     /**
     * DELETE
-    * /activity/{id}
-    * Delete a given activity
+    * /group/{id}
+    * Delete a given group
     */
     public function delete($id) {
-        $activity = Activity::find($id);
+        $group = Group::find($id);
 
-        if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+        if (!$group) {
+            return redirect('/')->with('alert', 'Group not found');
         }
 
-        $activity->delete();
+        $group->delete();
 
-        return redirect('/activity')->with([
-            'alert' => $activity->name.' was deleted.'
+        return redirect('/group')->with([
+            'alert' => $group->name.' was deleted.'
         ]);
     }
 }
