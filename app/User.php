@@ -32,4 +32,9 @@ class User extends Authenticatable
         # With timetsamps() will ensure the pivot table has its created_at/updated_at fields automatically maintained
         return $this->belongsToMany('App\Group')->withTimestamps();
     }
+
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task')->withTimestamps();
+    }
 }
