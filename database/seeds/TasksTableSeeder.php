@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Task;
+use App\User;
 
 class TasksTableSeeder extends Seeder
 {
@@ -13,24 +14,29 @@ class TasksTableSeeder extends Seeder
     public function run()
     {
         $tasks = [
-            ['Sneeks', 'Get new sneakers'],
-            ['Watah', 'Bring water'],
-            ['Playlist', 'Set up a new running playlist'],
-            ['Cooking Supplies', 'Burner, grill, charcol/wood chips, lighter, tin foil'],
-            ['Food', 'Steaks, Veggies'],
-            ['Alcohol', 'Beer and wine'],
-            ['Champagne', 'Just in case ;)'],
-            ['Phone charger', 'Just in case']
+            ['Sneeks', 'Billy Bob', 'Get new sneakers'],
+            ['Watah', 'Saylly Sue', 'Bring water'],
+            ['Playlist', 'Kelly Klarkson', 'Set up a new running playlist'],
+            ['Cooking Supplies', 'Yin Yang', 'Burner, grill, charcol/wood chips, lighter, tin foil'],
+            ['Food', 'Yonny Yoman', 'Steaks, Veggies'],
+            ['Alcohol', 'username', 'Beer and wine'],
+            ['Champagne', 'Craig Church', 'Just in case ;)'],
+            ['Phone charger', 'Lucy Lee', 'Just in case'],
+            ['Poppers', 'Zak Zebra', 'Those things that shoot confetti when you pull the string']
         ];
 
         $count = count($tasks);
         
         foreach ($tasks as $key => $task) {
+            $user = $task[1];
+            $user_id = User::where('name', '=', $user)->pluck('id')->first();
+
             Task::insert([
                 'created_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'name' => $task[0],
-                'description' => $task[1]
+                'user_id' => $user_id,
+                'description' => $task[2]
             ]);
             $count--;
         }
