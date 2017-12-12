@@ -36,7 +36,7 @@
 
     <br>
     @if(!strpos($path, 'archive'))
-    <a href="/group/{{$group['id']}}/archive">Vew Expired Activities</a>
+    <a href="/group/{{$group['id']}}/archive">Include Expired Activities</a>
     @else
     <a href="/group/{{$group['id']}}">Hide Expired Activities</a>
     @endif
