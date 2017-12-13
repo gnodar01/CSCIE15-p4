@@ -34,7 +34,8 @@ class RolesController extends Controller
     public function create($gId, $aId) {
         return view('roles.create')->with([
             'gId' => $gId,
-            'aId' => $aId
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 
@@ -82,7 +83,8 @@ class RolesController extends Controller
         return view('roles.edit')->with([
             'role' => $role,
             'gId' => $gId,
-            'aId' => $aId
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 
@@ -131,7 +133,7 @@ class RolesController extends Controller
             'role' => $role,
             'gId' => $gId,
             'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId.'/role/'.$tId : url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 

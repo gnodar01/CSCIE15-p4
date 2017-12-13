@@ -34,7 +34,8 @@ class TasksController extends Controller
     public function create($gId, $aId) {
         return view('tasks.create')->with([
             'gId' => $gId,
-            'aId' => $aId
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 
@@ -82,7 +83,8 @@ class TasksController extends Controller
         return view('tasks.edit')->with([
             'task' => $task,
             'gId' => $gId,
-            'aId' => $aId
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 
@@ -131,7 +133,7 @@ class TasksController extends Controller
             'task' => $task,
             'gId' => $gId,
             'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId.'/task/'.$tId : url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 

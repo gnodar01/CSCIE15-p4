@@ -26,5 +26,6 @@
         
         <br>
         <input type='submit' value='Save changes' class='btn btn-primary btn-small'>
+        <a href='{{ $prevUrl }}' class='btn btn-secondary btn-small'>Cancel</a>
     </form>
 @endsection

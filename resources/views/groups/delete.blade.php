@@ -18,6 +18,5 @@
         
         <input type='submit' value='Delete' class='btn btn-danger btn-small'>
         <a href='{{$prevUrl}}' class='btn btn-secondary btn-small'>Cancel</a>
-
     </form>
 @endsection

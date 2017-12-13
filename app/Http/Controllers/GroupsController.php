@@ -66,7 +66,9 @@ class GroupsController extends Controller
     * Create a group
     */
     public function create() {
-        return view('groups.create');
+        return view('groups.create')->with([
+            'prevUrl' => url()->previous() == url()->current() ? '/group' : url()->previous()
+        ]);
     }
 
     /**
@@ -103,7 +105,10 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        return view('groups.edit')->with('group', $group);
+        return view('groups.edit')->with([
+            'group' => $group,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+        ]);
     }
 
     /**
@@ -147,7 +152,7 @@ class GroupsController extends Controller
 
         return view('groups.delete')->with([
             'group' => $group,
-            'prevUrl' => url()->previous() == url()->current() ? '/group' : url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
         ]);
     }
 

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// TODO: this?
-// use App;
 use App\Activity;
+use App\Group;
 
 class ActivitiesController extends Controller
 {
@@ -38,7 +37,16 @@ class ActivitiesController extends Controller
     * Create an activity
     */
     public function create($gId) {
-        return view('activities.create')->with('gId', $gId);
+        $group = Group::find($gId);
+
+        if (!$group) {
+            return redirect('/group')->with('alert', 'Group not found');
+        }
+
+        return view('activities.create')->with([
+            'gId' => $gId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+        ]);
     }
 
     /**
@@ -88,7 +96,8 @@ class ActivitiesController extends Controller
 
         return view('activities.edit')->with([
             'activity' => $activity,
-            'gId' => $gId
+            'gId' => $gId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
         ]);
     }
 
@@ -142,7 +151,7 @@ class ActivitiesController extends Controller
         return view('activities.delete')->with([
             'activity' => $activity,
             'gId' => $gId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
         ]);
     }
 
