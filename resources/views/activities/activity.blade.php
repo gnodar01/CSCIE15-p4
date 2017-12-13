@@ -18,9 +18,19 @@
         <br>
         Location: {{ $activity['location'] }}
         <br>
-        Date: {{ $activity['date_start'].' - '. $activity['date_end'] }}
+        Date:
+        {{ date_format(date_create($activity['date_start']),"Y/m/d") }}
+        -
+        {{ date_format(date_create($activity['date_end']),"Y/m/d") }}
+
+        @if($activity['time_start'] != $activity['time_end'])
         <br>
-        Time: {{ $activity['time_start'].' - '.$activity['time_end'] }}
+        Time:
+        {{ date_format(date_create($activity['time_start']),"g:i A") }}
+        -
+        {{ date_format(date_create($activity['time_end']),"g:i A") }}
+        @endif
+
         <div class="activity-actions">
             <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/edit">Edit</a> |
             <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/delete">Delete</a>
