@@ -9,6 +9,21 @@ use App\Group;
 
 class GroupsController extends Controller
 {
+    protected function validateUser($group) {
+        $currentUser = Auth::user();
+        $users = $group->users()->getResults();
+
+        $access = false;
+
+        foreach ($users as $user) {
+            if ($user->id == $currentUser->id) {
+                $access = true;
+            }
+        }
+
+        return $access;
+    }
+
     /**
      * GET
      * /
@@ -16,8 +31,8 @@ class GroupsController extends Controller
      * Show all groups
      */
     public function index(Request $request) {
-        $user = $request->user();
-        // $user = Auth::user();
+        // $user = $request->user();
+        $user = Auth::user();
 
         if ($user) {
             $userId = $user->id;
@@ -44,6 +59,7 @@ class GroupsController extends Controller
     */
     public function group($id, Request $request, $archive=false) {
         $group = Group::find($id);
+        $users = $group->users()->getResults();
 
         if (!$group) {
             return redirect('/group')->with('alert', 'Group not found');
@@ -57,14 +73,18 @@ class GroupsController extends Controller
             $activities = $group->activities()->getResults();
         }
 
-        $users = $group->users()->getResults();
+        $access = $this->validateUser($group);
 
-        return view('groups.group')->with([
-            'group' => $group,
-            'activities' => $activities,
-            'users' => $users,
-            'path' => $request->path()
-        ]);
+        if ($access) {
+            return view('groups.group')->with([
+                'group' => $group,
+                'activities' => $activities,
+                'users' => $users,
+                'path' => $request->path()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -98,10 +118,12 @@ class GroupsController extends Controller
             'description' => 'required'
         ]);
 
+        $user = Auth::user();
         $group = new Group();
         $group->name = $request->input('name');
         $group->description = $request->input('description');
         $group->save();
+        $group->users()->save($user);
 
         return redirect('/group/'.$group->id)->with([
             'group' => $group,
@@ -121,10 +143,16 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        return view('groups.edit')->with([
-            'group' => $group,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
-        ]);
+        $access = $this->validateUser($group);
+
+        if ($access) {
+            return view('groups.edit')->with([
+                'group' => $group,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -142,16 +170,22 @@ class GroupsController extends Controller
 
         if (!$group) {
             return redirect('/')->with('alert', 'Group not found');
-        }        
+        }
 
-        $group->name = $request->input('name');
-        $group->description = $request->input('description');
-        $group->save();
+        $access = $this->validateUser($group);
 
-        return redirect('/group/'.$id)->with([
-            'gorup' => $group,
-            'alert' => 'Your changes were saved.'
-        ]);
+        if ($access) {
+            $group->name = $request->input('name');
+            $group->description = $request->input('description');
+            $group->save();
+
+            return redirect('/group/'.$id)->with([
+                'gorup' => $group,
+                'alert' => 'Your changes were saved.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -166,10 +200,16 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        return view('groups.delete')->with([
-            'group' => $group,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
-        ]);
+        $access = $this->validateUser($group);
+
+        if ($access) {
+            return view('groups.delete')->with([
+                'group' => $group,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -184,11 +224,17 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        $group->delete();
+        $access = $this->validateUser($group);
 
-        return redirect('/group')->with([
-            'alert' => $group->name.' was deleted.'
-        ]);
+        if ($access) {
+            $group->delete();
+
+            return redirect('/group')->with([
+                'alert' => $group->name.' was deleted.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -200,17 +246,12 @@ class GroupsController extends Controller
         $user = Auth::user();
         $group = Group::find($id);
 
-        if (!$user) {
-            return redirect('/login')->with([
-                'alert' => 'You need to login to do this'
-            ]);
-        } else {
-            return view('groups.join')->with([
-                'group' => $group,
-                'user' => $user,
-                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
-            ]);
-        }
+        return view('groups.join')->with([
+            'group' => $group,
+            'user' => $user,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
+        ]);
+
     }
 
     /**
