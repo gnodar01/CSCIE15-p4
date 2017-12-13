@@ -212,8 +212,7 @@ class GroupsController extends Controller
         $access = helpers\validateByGroup($group);
 
         if ($access) {
-            $group->users()->detach();
-            // $group->activities()->delete();
+            $group->users()->detach();;
             $group->delete();
 
             return redirect('/group')->with([
