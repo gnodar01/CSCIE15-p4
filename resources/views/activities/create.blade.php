@@ -6,7 +6,7 @@
 @section('content')
     <h1>Add Activity</h1>
 
-    <form method='POST' action='/activity'>
+    <form method='POST' action='/group/{{ $gId }}/activity'>
 
         {{ csrf_field() }}
 

@@ -4,7 +4,7 @@
 @endpush
 
 @push('nav')
-<li><a href='/activity/create'>Add an Activity</a>
+<li><a href='/group/{{ $group['id'] }}/activity/create'>Add an Activity</a>
 @endpush
 
 @section('content')
@@ -39,9 +39,9 @@
         <div class="activity">
             {{ $activity['name'] }}
             <div class="activity-actions">
-                <a href="/activity/{{ $activity['id'] }}">View</a> |
-                <a href="/activity/{{ $activity['id'] }}/edit">Edit</a> |
-                <a href="/activity/{{ $activity['id'] }}/delete">Delete</a>
+                <a href="/group/{{ $group['id'] }}/activity/{{ $activity['id'] }}">View</a> |
+                <a href="/group/{{ $group['id'] }}/activity/{{ $activity['id'] }}/edit">Edit</a> |
+                <a href="/group/{{ $group['id'] }}/activity/{{ $activity['id'] }}/delete">Delete</a>
             </div>
         </div>
         <br>

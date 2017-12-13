@@ -1,3 +1,5 @@
+{{-- this view is not used currently --}}
+
 @extends('layouts.master')
 
 @push('head')

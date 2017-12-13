@@ -15,36 +15,36 @@ class ActivitiesController extends Controller
      * /activity
      * Show all activities
      */
-    public function index(Request $request) {
-        $activities = Activity::whereDate('date_start', '>=', date('Y-m-d'))->get();
+    // public function index(Request $request) {
+    //     $activities = Activity::whereDate('date_start', '>=', date('Y-m-d'))->get();
 
-        return view('activities.index')->with([
-            'activities' => $activities,
-            'path' => $request->path()
-        ]);
-    }
+    //     return view('activities.index')->with([
+    //         'activities' => $activities,
+    //         'path' => $request->path()
+    //     ]);
+    // }
 
     /**
      * GET
      * /activity/archive
      * Show all activities, including expired ones, for given group
      */
-    public function archive(Request $request) {
-        $activities = Activity::all();
+    // public function archive(Request $request) {
+    //     $activities = Activity::all();
 
-        return view('activities.index')->with([
-            'activities' => $activities,
-            'path' => $request->path()
-        ]);
-    }
+    //     return view('activities.index')->with([
+    //         'activities' => $activities,
+    //         'path' => $request->path()
+    //     ]);
+    // }
 
     /**
     * GET
-    * /activity/{id}
+    * group/{gId}/activity/{aId}
     * Show info for given activity
     */
-    public function activity($id) {
-        $activity = Activity::find($id);
+    public function activity($gId, $aId) {
+        $activity = Activity::find($aId);
 
         if (!$activity) {
             return redirect('/')->with('alert', 'Activity not found');
@@ -56,25 +56,26 @@ class ActivitiesController extends Controller
         return view('activities.activity')->with([
             'activity' => $activity,
             'tasks' => $tasks,
-            'roles' => $roles
+            'roles' => $roles,
+            'gId' => $gId
         ]);
     }
 
     /**
     * GET
-    * /activity/create
+    * group/{gId}/activity/create
     * Create an activity
     */
-    public function create() {
-        return view('activities.create');
+    public function create($gId) {
+        return view('activities.create')->with('gId', $gId);
     }
 
     /**
     * POST
-    * /activity
+    * group/{gId}/activity
     * Add new activity
     */
-    public function add(Request $request) {
+    public function add($gId, Request $request) {
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -93,7 +94,7 @@ class ActivitiesController extends Controller
         $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
         $activity->save();
 
-        return redirect('/activity/'.$activity->id)->with([
+        return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
             'activity' => $activity,
             'alert' => 'Your activity was added.'
         ]);
@@ -101,25 +102,28 @@ class ActivitiesController extends Controller
 
     /**
     * GET
-    * /activity/{id}/edit
+    * group/{gId}/activity/{aId}/edit
     * Edit info for given activity
     */
-    public function edit($id) {
-        $activity = Activity::find($id);
+    public function edit($gId, $aId) {
+        $activity = Activity::find($aId);
 
         if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+            return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
-        return view('activities.edit')->with('activity', $activity);
+        return view('activities.edit')->with([
+            'activity' => $activity,
+            'gId' => $gId
+        ]);
     }
 
     /**
     * PUT
-    * /activity/{id}
+    * group/{gId}/activity/{aId}
     * Update info for given activity
     */
-    public function update(Request $request, $id) {
+    public function update($gId, $aId, Request $request) {
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -128,10 +132,10 @@ class ActivitiesController extends Controller
             'date-end' => 'required'
         ]);
 
-        $activity = Activity::find($id);
+        $activity = Activity::find($aId);
 
         if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+            return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }        
 
         $activity->name = $request->input('name');
@@ -143,7 +147,7 @@ class ActivitiesController extends Controller
         $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
         $activity->save();
 
-        return redirect('/activity/'.$id)->with([
+        return redirect('/group/'.$gId.'/activity/'.$aId)->with([
             'activity' => $activity,
             'alert' => 'Your changes were saved.'
         ]);
@@ -151,37 +155,38 @@ class ActivitiesController extends Controller
 
     /**
     * GET
-    * /activity/{id}/delete
+    * group/{gId}/activity/{aId}/delete
     * Confirm deletion of given activity
     */
-    public function confirmDelete($id) {
-        $activity = Activity::find($id);
+    public function confirmDelete($gId, $aId) {
+        $activity = Activity::find($aId);
 
         if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+            return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
         return view('activities.delete')->with([
             'activity' => $activity,
-            'prevUrl' => url()->previous() == url()->current() ? '/activity' : url()->previous()
+            'prevUrl' => url()->previous() == url()->current() ? 'group/'.$gId.'/activity' : url()->previous(),
+            'gId' => $gId
         ]);
     }
 
     /**
     * DELETE
-    * /activity/{id}
+    * group/{gId}/activity/{aId}
     * Delete a given activity
     */
-    public function delete($id) {
-        $activity = Activity::find($id);
+    public function delete($gId, $aId) {
+        $activity = Activity::find($aId);
 
         if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+            return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
         $activity->delete();
 
-        return redirect('/activity')->with([
+        return redirect('group/'.$gId.'/activity')->with([
             'alert' => $activity->name.' was deleted.'
         ]);
     }

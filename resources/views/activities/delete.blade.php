@@ -6,7 +6,7 @@
 @section('content')
     <h1>Delete {{$activity->name}}</h1>
 
-    <form method='POST' action='/activity/{{ $activity['id'] }}'>
+    <form method='POST' action='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>
 
         {{ method_field('delete') }}
 
@@ -15,7 +15,7 @@
         <div>Are you sure you want to delete {{ $activity->name }}?</div>
         
         <input type='submit' value='Delete' class='btn btn-danger btn-small'>
-        <a href='{{$prevUrl}}' class='btn btn-secondary btn-small'>Cancel</a>
+        <a href='{{ $prevUrl }}' class='btn btn-secondary btn-small'>Cancel</a>
 
     </form>
 @endsection

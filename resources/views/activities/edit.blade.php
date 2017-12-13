@@ -6,7 +6,7 @@
 @section('content')
     <h1>Edit {{ $activity['name'] }}</h1>
 
-    <form method='POST' action='/activity/{{ $activity['id'] }}'>
+    <form method='POST' action='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>
 
         {{ method_field('put') }}
 

@@ -32,45 +32,42 @@ Route::get('/debug', function () {
  * Activities
  */
 
-// Create activity
-Route::get('/activity/create', 'ActivitiesController@create');
-Route::post('/activity', 'ActivitiesController@add');
+// Delete activity
+Route::get('/group/{gId}/activity/{id}/delete', 'ActivitiesController@confirmDelete');
+Route::delete('/group/{gId}/activity/{id}', 'ActivitiesController@delete');
 
 // Edit activity
-Route::get('/activity/{id}/edit', 'ActivitiesController@edit');
-Route::put('/activity/{id}', 'ActivitiesController@update');
+Route::get('/group/{gId}/activity/{id}/edit', 'ActivitiesController@edit');
+Route::put('/group/{gId}/activity/{id}', 'ActivitiesController@update');
 
-// Delete activity
-Route::get('/activity/{id}/delete', 'ActivitiesController@confirmDelete');
-Route::delete('/activity/{id}', 'ActivitiesController@delete');
+// Create activity
+Route::get('/group/{gId}/activity/create', 'ActivitiesController@create');
+Route::post('/group/{gId}/activity', 'ActivitiesController@add');
 
 // View all activities, including expired
-Route::get('/activity/archive', 'ActivitiesController@archive');
+// Route::get('/activity/archive', 'ActivitiesController@archive');
 
 // View activity
-Route::get('/activity/{id}', 'ActivitiesController@activity');
+Route::get('/group/{gId}/activity/{aId}', 'ActivitiesController@activity');
 
 // View all upcoming activities
-Route::get('/activity', 'ActivitiesController@index');
-
-// View all activities
-Route::get('/activity/archive', 'ActivitiesController@archive');
+// Route::get('/activity', 'ActivitiesController@index');
 
 /*
  * GROUPS
  */
 
-// Create group
-Route::get('/group/create', 'GroupsController@create');
-Route::post('/group', 'GroupsController@add');
+// Delete group
+Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
+Route::delete('/group/{id}', 'GroupsController@delete');
 
 // Edit group
 Route::get('/group/{id}/edit', 'GroupsController@edit');
 Route::put('/group/{id}', 'GroupsController@update');
 
-// Delete group
-Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
-Route::delete('/group/{id}', 'GroupsController@delete');
+// Create group
+Route::get('/group/create', 'GroupsController@create');
+Route::post('/group', 'GroupsController@add');
 
 // View group with expired activities
 Route::get('/group/{id}/archive', 'GroupsController@archive');

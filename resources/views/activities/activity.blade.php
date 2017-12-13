@@ -18,8 +18,8 @@
         <br>
         Time: {{ $activity['time_start'].' - '.$activity['time_end'] }}
         <div class="activity-actions">
-            <a href="/activity/{{ $activity['id'] }}/edit">Edit</a> |
-            <a href="/activity/{{ $activity['id'] }}/delete">Delete</a>
+            <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/edit">Edit</a> |
+            <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/delete">Delete</a>
         </div>
     </div>
 
