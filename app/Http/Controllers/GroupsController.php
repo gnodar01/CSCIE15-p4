@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use DB;
 use App\Group;
 
 class GroupsController extends Controller
@@ -14,10 +16,24 @@ class GroupsController extends Controller
      * Show all groups
      */
     public function index() {
-        $groups = Group::all();
+        // $user = $request->user();
+        $user = Auth::user();
+        $userId = $user->id;
+
+        if ($user) {
+            $groups = $user->groups()->getResults();
+
+            $groupsNot = Group::whereDoesntHave('users', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })->get();
+        } else {
+            $groups = [];
+            $groupsNot = Group::all();
+        }
 
         return view('groups.index')->with([
-            'groups' => $groups
+            'groups' => $groups,
+            'groupsNot' => $groupsNot
         ]);
     }
 
