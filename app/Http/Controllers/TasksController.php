@@ -74,10 +74,7 @@ class TasksController extends Controller
             $task = new Task();
             $task->name = $request->input('name');
             $task->description = $request->input('description');
-            // TODO: this?
-            // $task->group()->associate();
             $task->activity_id = $aId;
-            // TODO: Fix this
             $task->user_id = $request->input('owner');
             $task->save();
 

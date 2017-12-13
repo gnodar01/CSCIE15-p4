@@ -88,8 +88,6 @@ class ActivitiesController extends Controller
             $activity->date_end = $request->input('date-end');
             $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
             $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-            // TODO: this?
-            // $activity->group()->associate($group);
             $activity->group_id = $gId;
             $activity->save();
 

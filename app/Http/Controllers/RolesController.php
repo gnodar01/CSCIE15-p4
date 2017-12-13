@@ -74,11 +74,8 @@ class RolesController extends Controller
             $role = new Role();
             $role->name = $request->input('name');
             $role->description = $request->input('description');
-            // TODO: this?
-            // $role->group()->associate();
             $role->activity_id = $aId;
-            // TODO: Fix this
-            $role->user_id = 1;
+            $task->user_id = $request->input('owner');;
             $role->save();
 
             return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
