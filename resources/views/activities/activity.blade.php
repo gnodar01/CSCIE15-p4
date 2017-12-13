@@ -28,11 +28,10 @@
         </div>
     </div>
 
-    @if(isset($tasks))
+    @if(isset($tasks) && sizeof($tasks) > 0)
     <br>
     <h2>Tasks</h2>
     @foreach($tasks as $task)
-    @endforeach
         <div class="task">
             Task: {{ $task['name']}}
             <br>
@@ -41,9 +40,10 @@
             Owner: {{ $task->user->name }}
         </div>
         <br>
+    @endforeach
     @endif
 
-    @if(isset($roles))
+    @if(isset($roles) && sizeof($roles) > 0)
     <br>
     <h2>Roles</h2>
     @foreach($roles as $role)

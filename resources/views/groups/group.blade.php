@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    @if(isset($users))
+    @if(isset($users) && sizeof($users) > 0)
     <br>
     <h2>Group Members</h2>
     @foreach($users as $user)
@@ -30,7 +30,7 @@
     @endforeach
     @endif
 
-    @if(isset($activities))
+    @if(isset($activities) && sizeof($users) > 0)
     <br>
     <h2>Activities</h2>
     @foreach($activities as $activity)

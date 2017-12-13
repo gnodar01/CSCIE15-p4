@@ -33,12 +33,12 @@ Route::get('/debug', function () {
  */
 
 // Delete activity
-Route::get('/group/{gId}/activity/{id}/delete', 'ActivitiesController@confirmDelete');
-Route::delete('/group/{gId}/activity/{id}', 'ActivitiesController@delete');
+Route::get('/group/{gId}/activity/{aId}/delete', 'ActivitiesController@confirmDelete');
+Route::delete('/group/{gId}/activity/{aId}', 'ActivitiesController@delete');
 
 // Edit activity
-Route::get('/group/{gId}/activity/{id}/edit', 'ActivitiesController@edit');
-Route::put('/group/{gId}/activity/{id}', 'ActivitiesController@update');
+Route::get('/group/{gId}/activity/{aId}/edit', 'ActivitiesController@edit');
+Route::put('/group/{gId}/activity/{aId}', 'ActivitiesController@update');
 
 // Create activity
 Route::get('/group/{gId}/activity/create', 'ActivitiesController@create');

@@ -47,7 +47,7 @@ class ActivitiesController extends Controller
         $activity = Activity::find($aId);
 
         if (!$activity) {
-            return redirect('/')->with('alert', 'Activity not found');
+            return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
         $tasks = $activity->tasks()->with('user')->getResults();
@@ -92,6 +92,9 @@ class ActivitiesController extends Controller
         $activity->date_end = $request->input('date-end');
         $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
         $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
+        // TODO: this?
+        // $activity->group()->associate($group);
+        $activity->group_id = $gId;
         $activity->save();
 
         return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
@@ -186,7 +189,7 @@ class ActivitiesController extends Controller
 
         $activity->delete();
 
-        return redirect('group/'.$gId.'/activity')->with([
+        return redirect('/group/'.$gId.'/activity/'.$aId)->with([
             'alert' => $activity->name.' was deleted.'
         ]);
     }
