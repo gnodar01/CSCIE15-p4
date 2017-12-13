@@ -122,3 +122,5 @@ Route::get('/group', 'GroupsController@index');
 
 // View all groups
 Route::get('/', 'GroupsController@index');
+
+Auth::routes();
