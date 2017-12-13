@@ -108,6 +108,10 @@ Route::group(['middleware' => 'auth'], function () {
      * GROUPS
      */
 
+    // Join group
+    Route::get('/group/{id}/join', 'GroupsController@confirmJoin');
+    Route::post('/group/{id}/join', 'GroupsController@join');
+
     // Delete group
     Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
     Route::delete('/group/{id}', 'GroupsController@delete');

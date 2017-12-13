@@ -15,12 +15,12 @@ class GroupsController extends Controller
      * /group
      * Show all groups
      */
-    public function index() {
-        // $user = $request->user();
-        $user = Auth::user();
-        $userId = $user->id;
+    public function index(Request $request) {
+        $user = $request->user();
+        // $user = Auth::user();
 
         if ($user) {
+            $userId = $user->id;
             $groups = $user->groups()->getResults();
 
             $groupsNot = Group::whereDoesntHave('users', function($q) use ($userId) {
@@ -189,5 +189,49 @@ class GroupsController extends Controller
         return redirect('/group')->with([
             'alert' => $group->name.' was deleted.'
         ]);
+    }
+
+    /**
+     * GET
+     * /group/{id}/join
+     * Confirmation to join group
+     */
+    public function confirmJoin($id) {
+        $user = Auth::user();
+        $group = Group::find($id);
+
+        if (!$user) {
+            return redirect('/login')->with([
+                'alert' => 'You need to login to do this'
+            ]);
+        } else {
+            return view('groups.join')->with([
+                'group' => $group,
+                'user' => $user,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
+            ]);
+        }
+    }
+
+    /**
+     * PUT
+     * /group/{id}/join
+     * Join group
+     */
+    public function join($id) {
+        $user = Auth::user();
+        $group = Group::find($id);
+
+        if (!$user) {
+            return redirect('/login')->with([
+                'alert' => 'You need to login to do this'
+            ]);
+        } else {
+            $group->users()->save($user);
+
+            return redirect('/group')->with([
+                'alert' => 'You have joined'.$group->name
+            ]);
+        }
     }
 }
