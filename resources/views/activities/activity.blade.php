@@ -2,6 +2,7 @@
 
 @push('nav')
 <li><a href='/group/create'>Add a Group</a></li>
+<li><a href="/group/{{ $gId }}">Back to Group</a></li>
 <li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a></li>
 <li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/create'>Add a Task</a></li>
 <li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/create'>Add a Role</a></li>
@@ -9,7 +10,6 @@
 
 @section('content')
     <h1>{{ $activity['name'] }}</h1>
-
     <br>
     <div class="activity">
         Name: {{ $activity['name'] }}

@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @push('nav')
+<li><a href="/group/{{ $gId }}">Back to Group</a></li>
+<li><a href="/group/{{ $gId }}/activity/{{ $aId }}">Back to Activity</a></li>
 <li><a href='/group/create'>Add a Group</a></li>
 <li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a></li>
 <li><a href='/group/{{ $gId }}/activity/{{ $aId }}/task/create'>Add a Task</a></li>
