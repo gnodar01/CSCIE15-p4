@@ -10,35 +10,6 @@ use Debugbar;
 class ActivitiesController extends Controller
 {
     /**
-     * GET
-     * /
-     * /activity
-     * Show all activities
-     */
-    // public function index(Request $request) {
-    //     $activities = Activity::whereDate('date_start', '>=', date('Y-m-d'))->get();
-
-    //     return view('activities.index')->with([
-    //         'activities' => $activities,
-    //         'path' => $request->path()
-    //     ]);
-    // }
-
-    /**
-     * GET
-     * /activity/archive
-     * Show all activities, including expired ones, for given group
-     */
-    // public function archive(Request $request) {
-    //     $activities = Activity::all();
-
-    //     return view('activities.index')->with([
-    //         'activities' => $activities,
-    //         'path' => $request->path()
-    //     ]);
-    // }
-
-    /**
     * GET
     * group/{gId}/activity/{aId}
     * Show info for given activity
