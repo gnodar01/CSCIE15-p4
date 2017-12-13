@@ -13,14 +13,16 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = [
-            ['Billy Bob', 'Billy@gmail.com', 'billyisawesome'],
-            ['Craig Church', 'Craig@gmail.com', '123pass'],
-            ['Sally Sue', 'Sally@gmail.com', 'tiemyshoe'],
-            ['Kelly Klarkson', 'Kelly@gmail.com', 'keller!'],
-            ['Lucy Lee', 'Lucy@gmail.com', 'lucylovesu@'],
-            ['Yin Yang', 'YangYin@gmail.com', 'yingyangyo'],
-            ['Yonny Yoman', 'Yoman@gmail.com', 'yo_man'],
-            ['Zak Zebra', 'Zebra@gmail.com', 'ilikestripes']
+            ['Jill Harvard', 'jill@harvard.edu', Hash::make('helloworld')],
+            ['Jamal Harvard', 'jamal@harvard.edu', Hash::make('helloworld')],
+            ['Billy Bob', 'Billy@gmail.com', Hash::make('billyisawesome')],
+            ['Craig Church', 'Craig@gmail.com', Hash::make('123pass')],
+            ['Sally Sue', 'Sally@gmail.com', Hash::make('tiemyshoe')],
+            ['Kelly Klarkson', 'Kelly@gmail.com', Hash::make('keller!')],
+            ['Lucy Lee', 'Lucy@gmail.com', Hash::make('lucylovesu@')],
+            ['Yin Yang', 'YangYin@gmail.com', Hash::make('yingyangyo')],
+            ['Yonny Yoman', 'Yoman@gmail.com', Hash::make('yo_man')],
+            ['Zak Zebra', 'Zebra@gmail.com', Hash::make('ilikestripes')]
         ];
 
         $count = count($users);

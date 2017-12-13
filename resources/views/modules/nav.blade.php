@@ -7,7 +7,13 @@
 
 <nav>
     <ul>
-        <li><a href='/group'>All Groups</a>
+        <li><a href='/group'>All Groups</a></li>
         @stack('nav')
+        <li>
+            <form method='POST' id='logout' action='/logout'>
+                {{csrf_field()}}
+                <a href='#' id="logout-link">Logout</a>
+            </form>
+        </li>
     </ul>
 </nav>

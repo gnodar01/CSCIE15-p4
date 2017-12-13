@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @push('nav')
-<li><a href='/group/create'>Add a Group</a>
-<li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a>
-<li><a href='/group/{{ $gId }}/activity/{{ $aId }}/role/create'>Add a Role</a>
+<li><a href='/group/create'>Add a Group</a></li>
+<li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a></li>
+<li><a href='/group/{{ $gId }}/activity/{{ $aId }}/role/create'>Add a Role</a></li>
 @endpush
 
 @section('content')

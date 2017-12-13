@@ -28,6 +28,18 @@ Route::get('/debug', function () {
     dump($debug);
 });
 
+Route::get('/show-login-status', function () {
+    $user = Auth::user();
+
+    if ($user) {
+        dump('You are logged in.', $user->toArray());
+    } else {
+        dump('You are not logged in.');
+    }
+
+    return;
+});
+
 /* Roles
  *
  */

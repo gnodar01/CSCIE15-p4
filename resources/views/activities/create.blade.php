@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @push('nav')
-<li><a href='/group/create'>Add a Group</a>
+<li><a href='/group/create'>Add a Group</a></li>
 @endpush
 
 @section('content')

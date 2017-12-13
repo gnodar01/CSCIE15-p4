@@ -32,6 +32,8 @@
         <section id="main">
             @yield('content')
         </section>
+
+        <script src="/js/activitus.js"></script>
         @stack('js')
     </body>
 </html>
