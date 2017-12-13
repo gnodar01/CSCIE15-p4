@@ -3,6 +3,12 @@
 @push('head')
 @endpush
 
+@push('nav')
+{{-- TODO: these --}}
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Task</a>
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Role</a>
+@endpush
+
 @section('content')
     <h1>{{ $activity['name'] }}</h1>
 
