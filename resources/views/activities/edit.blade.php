@@ -3,8 +3,8 @@
 @push('nav')
 <li><a href='/group/create'>Add a Group</a>
 <li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a>
-<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Task</a>
-<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Role</a>
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/create'>Add a Task</a>
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/create'>Add a Role</a>
 @endpush
 
 @section('content')

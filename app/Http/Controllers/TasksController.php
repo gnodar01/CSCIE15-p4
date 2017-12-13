@@ -12,15 +12,15 @@ class TasksController extends Controller
     * /group/{gId}/activity/{aId}/task/{tId}
     * Show info for given task
     */
-    public function activity($gId, $aId, $tId) {
-        $task = Activity::find($tId);
+    public function task($gId, $aId, $tId) {
+        $task = Task::find($tId);
 
         if (!$task) {
-            return redirect('/group/'.$gId.'/activity/'.$aid)->with('alert', 'Task not found');
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
         return view('tasks.task')->with([
-            'task' => $task
+            'task' => $task,
             'gId' => $gId,
             'aId' => $aId
         ]);
@@ -31,7 +31,7 @@ class TasksController extends Controller
     * /group/{gId}/activity/{aId}/task/create
     * Create a task
     */
-    public function create($gId) {
+    public function create($gId, $aId) {
         return view('tasks.create')->with([
             'gId' => $gId,
             'aId' => $aId
@@ -43,122 +43,117 @@ class TasksController extends Controller
     * /group/{gId}/activity/{aId}/task
     * Add new task
     */
-    // public function add($gId, Request $request) {
-    //     $this->validate($request, [
-    //         'name' => 'required',
-    //         'description' => 'required',
-    //         'location' => 'required',
-    //         'date-start' => 'required',
-    //         'date-end' => 'required'
-    //     ]);
+    public function add($gId, $aId, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
 
-    //     $activity = new Activity();
-    //     $activity->name = $request->input('name');
-    //     $activity->description = $request->input('description');
-    //     $activity->location = $request->input('location');
-    //     $activity->date_start = $request->input('date-start');
-    //     $activity->date_end = $request->input('date-end');
-    //     $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-    //     $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-    //     // TODO: this?
-    //     // $activity->group()->associate($group);
-    //     $activity->group_id = $gId;
-    //     $activity->save();
+        $task = new Task();
+        $task->name = $request->input('name');
+        $task->description = $request->input('description');
+        // TODO: this?
+        // $task->group()->associate();
+        $task->activity_id = $aId;
+        // TODO: Fix this
+        $task->user_id = 1;
+        $task->save();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
-    //         'activity' => $activity,
-    //         'alert' => 'Your activity was added.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+            'task' => $task,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => 'Your task was added.'
+        ]);
+    }
 
     /**
     * GET
     * /group/{gId}/activity/{aId}/task/{tId}/edit
     * Edit info for given task
     */
-    // public function edit($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function edit($gId, $aId, $tId) {
+        $task = Task::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$task) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
+        }
 
-    //     return view('activities.edit')->with([
-    //         'activity' => $activity,
-    //         'gId' => $gId
-    //     ]);
-    // }
+        return view('tasks.edit')->with([
+            'task' => $task,
+            'gId' => $gId,
+            'aId' => $aId
+        ]);
+    }
 
     /**
     * PUT
     * /group/{gId}/activity/{aId}/task/{tId}
     * Update info for given task
     */
-    // public function update($gId, $aId, Request $request) {
-    //     $this->validate($request, [
-    //         'name' => 'required',
-    //         'description' => 'required',
-    //         'location' => 'required',
-    //         'date-start' => 'required',
-    //         'date-end' => 'required'
-    //     ]);
+    public function update($gId, $aId, $tId, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
 
-    //     $activity = Activity::find($aId);
+        $task = Task::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }        
+        if (!$task) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
+        }
 
-    //     $activity->name = $request->input('name');
-    //     $activity->description = $request->input('description');
-    //     $activity->location = $request->input('location');
-    //     $activity->date_start = $request->input('date-start');
-    //     $activity->date_end = $request->input('date-end');
-    //     $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-    //     $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-    //     $activity->save();
+        $task->name = $request->input('name');
+        $task->description = $request->input('description');
+        $task->save();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-    //         'activity' => $activity,
-    //         'alert' => 'Your changes were saved.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+            'task' => $task,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => 'Your changes were saved.'
+        ]);
+    }
 
     /**
     * GET
     * /group/{gId}/activity/{aId}/task/{tId}/delete
     * Confirm deletion of given task
     */
-    // public function confirmDelete($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function confirmDelete($gId, $aId, $tId) {
+        $task = Task::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$task) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
+        }
 
-    //     return view('activities.delete')->with([
-    //         'activity' => $activity,
-    //         'prevUrl' => url()->previous() == url()->current() ? 'group/'.$gId.'/activity' : url()->previous(),
-    //         'gId' => $gId
-    //     ]);
-    // }
+        return view('tasks.delete')->with([
+            'task' => $task,
+            'gId' => $gId,
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId.'/task/'.$tId : url()->previous()
+        ]);
+    }
 
     /**
     * DELETE
     * /group/{gId}/activity/{aId}/task/{tId}
     * Delete a given task
     */
-    // public function delete($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function delete($gId, $aId, $tId) {
+        $task = Task::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$task) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
+        }
 
-    //     $activity->delete();
+        $task->delete();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-    //         'alert' => $activity->name.' was deleted.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+            'task' => $task,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => $task->name.' was deleted.'
+        ]);
+    }
 }

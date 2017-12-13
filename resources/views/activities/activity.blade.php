@@ -3,9 +3,8 @@
 @push('nav')
 <li><a href='/group/create'>Add a Group</a>
 <li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a>
-{{-- TODO: these --}}
-<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Task</a>
-<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Role</a>
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/create'>Add a Task</a>
+<li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/create'>Add a Role</a>
 @endpush
 
 @section('content')
@@ -38,6 +37,11 @@
             Description: {{ $task['description'] }}
             <br>
             Owner: {{ $task->user->name }}
+            <div class="task-action">
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/{{ $task['id'] }}">View</a> |
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/{{ $task['id'] }}/edit">Edit</a> |
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/task/{{ $task['id'] }}/delete">Delete</a>
+            </div>
         </div>
         <br>
     @endforeach
@@ -53,6 +57,11 @@
             Description: {{ $role['description'] }}
             <br>
             Owner: {{ $role->user->name }}
+            <div class="role-action">
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/{{ $role['id'] }}">View</a> |
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/{{ $role['id'] }}/edit">Edit</a> |
+                <a href="/group/{{ $gId }}/activity/{{ $activity['id'] }}/role/{{ $role['id'] }}/delete">Delete</a>
+            </div>
         </div>
         <br>
     @endforeach

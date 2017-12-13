@@ -141,8 +141,8 @@ class ActivitiesController extends Controller
 
         return view('activities.delete')->with([
             'activity' => $activity,
-            'prevUrl' => url()->previous() == url()->current() ? 'group/'.$gId.'/activity' : url()->previous(),
-            'gId' => $gId
+            'gId' => $gId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
         ]);
     }
 

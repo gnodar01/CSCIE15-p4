@@ -9,18 +9,18 @@ class RolesController extends Controller
 {
     /**
     * GET
-    * /group/{gId}/activity/{aId}/task/{tId}
-    * Show info for given task
+    * /group/{gId}/activity/{aId}/role/{tId}
+    * Show info for given role
     */
-    public function activity($gId, $aId, $tId) {
-        $task = Activity::find($tId);
+    public function role($gId, $aId, $tId) {
+        $role = Role::find($tId);
 
-        if (!$task) {
-            return redirect('/group/'.$gId.'/activity/'.$aid)->with('alert', 'Role not found');
+        if (!$role) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        return view('tasks.task')->with([
-            'task' => $task
+        return view('roles.role')->with([
+            'role' => $role,
             'gId' => $gId,
             'aId' => $aId
         ]);
@@ -28,11 +28,11 @@ class RolesController extends Controller
 
     /**
     * GET
-    * /group/{gId}/activity/{aId}/task/create
-    * Create a task
+    * /group/{gId}/activity/{aId}/role/create
+    * Create a role
     */
-    public function create($gId) {
-        return view('tasks.create')->with([
+    public function create($gId, $aId) {
+        return view('roles.create')->with([
             'gId' => $gId,
             'aId' => $aId
         ]);
@@ -40,125 +40,120 @@ class RolesController extends Controller
 
     /**
     * POST
-    * /group/{gId}/activity/{aId}/task
-    * Add new task
+    * /group/{gId}/activity/{aId}/role
+    * Add new role
     */
-    // public function add($gId, Request $request) {
-    //     $this->validate($request, [
-    //         'name' => 'required',
-    //         'description' => 'required',
-    //         'location' => 'required',
-    //         'date-start' => 'required',
-    //         'date-end' => 'required'
-    //     ]);
+    public function add($gId, $aId, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
 
-    //     $activity = new Activity();
-    //     $activity->name = $request->input('name');
-    //     $activity->description = $request->input('description');
-    //     $activity->location = $request->input('location');
-    //     $activity->date_start = $request->input('date-start');
-    //     $activity->date_end = $request->input('date-end');
-    //     $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-    //     $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-    //     // TODO: this?
-    //     // $activity->group()->associate($group);
-    //     $activity->group_id = $gId;
-    //     $activity->save();
+        $role = new Role();
+        $role->name = $request->input('name');
+        $role->description = $request->input('description');
+        // TODO: this?
+        // $role->group()->associate();
+        $role->activity_id = $aId;
+        // TODO: Fix this
+        $role->user_id = 1;
+        $role->save();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
-    //         'activity' => $activity,
-    //         'alert' => 'Your activity was added.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+            'role' => $role,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => 'Your role was added.'
+        ]);
+    }
 
     /**
     * GET
-    * /group/{gId}/activity/{aId}/task/{tId}/edit
-    * Edit info for given task
+    * /group/{gId}/activity/{aId}/role/{tId}/edit
+    * Edit info for given role
     */
-    // public function edit($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function edit($gId, $aId, $tId) {
+        $role = Role::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$role) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
+        }
 
-    //     return view('activities.edit')->with([
-    //         'activity' => $activity,
-    //         'gId' => $gId
-    //     ]);
-    // }
+        return view('roles.edit')->with([
+            'role' => $role,
+            'gId' => $gId,
+            'aId' => $aId
+        ]);
+    }
 
     /**
     * PUT
-    * /group/{gId}/activity/{aId}/task/{tId}
-    * Update info for given task
+    * /group/{gId}/activity/{aId}/role/{tId}
+    * Update info for given role
     */
-    // public function update($gId, $aId, Request $request) {
-    //     $this->validate($request, [
-    //         'name' => 'required',
-    //         'description' => 'required',
-    //         'location' => 'required',
-    //         'date-start' => 'required',
-    //         'date-end' => 'required'
-    //     ]);
+    public function update($gId, $aId, $tId, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
 
-    //     $activity = Activity::find($aId);
+        $role = Role::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }        
+        if (!$role) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
+        }
 
-    //     $activity->name = $request->input('name');
-    //     $activity->description = $request->input('description');
-    //     $activity->location = $request->input('location');
-    //     $activity->date_start = $request->input('date-start');
-    //     $activity->date_end = $request->input('date-end');
-    //     $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-    //     $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-    //     $activity->save();
+        $role->name = $request->input('name');
+        $role->description = $request->input('description');
+        $role->save();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-    //         'activity' => $activity,
-    //         'alert' => 'Your changes were saved.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+            'role' => $role,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => 'Your changes were saved.'
+        ]);
+    }
 
     /**
     * GET
-    * /group/{gId}/activity/{aId}/task/{tId}/delete
-    * Confirm deletion of given task
+    * /group/{gId}/activity/{aId}/role/{tId}/delete
+    * Confirm deletion of given role
     */
-    // public function confirmDelete($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function confirmDelete($gId, $aId, $tId) {
+        $role = Role::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$role) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
+        }
 
-    //     return view('activities.delete')->with([
-    //         'activity' => $activity,
-    //         'prevUrl' => url()->previous() == url()->current() ? 'group/'.$gId.'/activity' : url()->previous(),
-    //         'gId' => $gId
-    //     ]);
-    // }
+        return view('roles.delete')->with([
+            'role' => $role,
+            'gId' => $gId,
+            'aId' => $aId,
+            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId.'/role/'.$tId : url()->previous()
+        ]);
+    }
 
     /**
     * DELETE
-    * /group/{gId}/activity/{aId}/task/{tId}
-    * Delete a given task
+    * /group/{gId}/activity/{aId}/role/{tId}
+    * Delete a given role
     */
-    // public function delete($gId, $aId) {
-    //     $activity = Activity::find($aId);
+    public function delete($gId, $aId, $tId) {
+        $role = Role::find($tId);
 
-    //     if (!$activity) {
-    //         return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-    //     }
+        if (!$role) {
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
+        }
 
-    //     $activity->delete();
+        $role->delete();
 
-    //     return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-    //         'alert' => $activity->name.' was deleted.'
-    //     ]);
-    // }
+        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+            'role' => $role,
+            'gId' => $gId,
+            'aId' => $aId,
+            'alert' => $role->name.' was deleted.'
+        ]);
+    }
 }
