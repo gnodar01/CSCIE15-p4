@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Group;
 use App\Http\helpers;
 
 class TasksController extends Controller
@@ -39,10 +40,14 @@ class TasksController extends Controller
     * Create a task
     */
     public function create($gId, $aId) {
-        $access = helpers\validateByGId($gId);
+        $group = Group::find($gId);
+
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
+            $users = $group->users()->getResults();
             return view('tasks.create')->with([
+                'users' => $users,
                 'gId' => $gId,
                 'aId' => $aId,
                 'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
@@ -73,7 +78,7 @@ class TasksController extends Controller
             // $task->group()->associate();
             $task->activity_id = $aId;
             // TODO: Fix this
-            $task->user_id = 1;
+            $task->user_id = $request->input('owner');
             $task->save();
 
             return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([

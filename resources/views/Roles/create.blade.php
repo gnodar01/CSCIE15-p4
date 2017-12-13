@@ -23,6 +23,14 @@
         <input type='text' name='description' id='description' value='{{ old('description') }}'>
         @include('modules.error-field', ['fieldName' => 'description'])
 
+        <label for='owner'>Assigned To </label>
+        <select name='owner' id='owner' value='{{ old('owner') }}'>
+            @foreach($users as $user)
+                <option value='{{ $user->id }}'>{{ $user->name }}</option>
+            @endforeach
+        </select>
+        @include('modules.error-field', ['fieldName' => 'owner'])
+
         <br>
         <input type='submit' value='Save changes' class='btn btn-primary btn-small'>
         <a href='{{$prevUrl}}' class='btn btn-secondary btn-small'>Cancel</a>

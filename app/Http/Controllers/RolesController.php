@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Role;
+use App\Group;
 use App\Http\helpers;
 
 class RolesController extends Controller
@@ -39,10 +40,14 @@ class RolesController extends Controller
     * Create a role
     */
     public function create($gId, $aId) {
+        $group = Group::find($gId);
+
         $access = helpers\validateByGId($gId);
 
         if ($access) {
+            $users = $group->users()->getResults();
             return view('roles.create')->with([
+                'users' => $users,
                 'gId' => $gId,
                 'aId' => $aId,
                 'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
