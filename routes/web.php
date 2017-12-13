@@ -28,6 +28,44 @@ Route::get('/debug', function () {
     dump($debug);
 });
 
+/* Roles
+ *
+ */
+
+// Delete role
+Route::get('/group/{gId}/activity/{aId}/role/{tId}/delete', 'RolesController@confirmDelete');
+Route::delete('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@delete');
+
+// Edit role
+Route::get('/group/{gId}/activity/{aId}/role/{tId}/edit', 'RolesController@edit');
+Route::put('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@update');
+
+// Create role
+Route::get('/group/{gId}/activity/{aId}/role/create', 'RolesController@create');
+Route::post('/group/{gId}/activity/{aId}/role', 'RolesController@add');
+
+// View role
+Route::get('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@role');
+
+/* Tasks
+ *
+ */
+
+// Delete task
+Route::get('/group/{gId}/activity/{aId}/task/{tId}/delete', 'TasksController@confirmDelete');
+Route::delete('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@delete');
+
+// Edit task
+Route::get('/group/{gId}/activity/{aId}/task/{tId}/edit', 'TasksController@edit');
+Route::put('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@update');
+
+// Create task
+Route::get('/group/{gId}/activity/{aId}/task/create', 'TasksController@create');
+Route::post('/group/{gId}/activity/{aId}/task', 'TasksController@add');
+
+// View task
+Route::get('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@task');
+
 /*
  * Activities
  */
