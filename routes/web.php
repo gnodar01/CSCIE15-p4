@@ -45,88 +45,172 @@ Route::get('/show-login-status', function () {
  */
 
 // Delete role
-Route::get('/group/{gId}/activity/{aId}/role/{tId}/delete', 'RolesController@confirmDelete');
-Route::delete('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@delete');
+Route::get('/group/{gId}/activity/{aId}/role/{tId}/delete', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@confirmDelete'
+]);
+Route::delete('/group/{gId}/activity/{aId}/role/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@delete'
+]);
 
 // Edit role
-Route::get('/group/{gId}/activity/{aId}/role/{tId}/edit', 'RolesController@edit');
-Route::put('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@update');
+Route::get('/group/{gId}/activity/{aId}/role/{tId}/edit', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@edit'
+]);
+Route::put('/group/{gId}/activity/{aId}/role/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@update'
+]);
 
 // Create role
-Route::get('/group/{gId}/activity/{aId}/role/create', 'RolesController@create');
-Route::post('/group/{gId}/activity/{aId}/role', 'RolesController@add');
+Route::get('/group/{gId}/activity/{aId}/role/create', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@create'
+]);
+Route::post('/group/{gId}/activity/{aId}/role', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@add'
+]);
 
 // View role
-Route::get('/group/{gId}/activity/{aId}/role/{tId}', 'RolesController@role');
+Route::get('/group/{gId}/activity/{aId}/role/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'RolesController@role'
+]);
 
 /* Tasks
  *
  */
 
 // Delete task
-Route::get('/group/{gId}/activity/{aId}/task/{tId}/delete', 'TasksController@confirmDelete');
-Route::delete('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@delete');
+Route::get('/group/{gId}/activity/{aId}/task/{tId}/delete', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@confirmDelete'
+]);
+Route::delete('/group/{gId}/activity/{aId}/task/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@delete'
+]);
 
 // Edit task
-Route::get('/group/{gId}/activity/{aId}/task/{tId}/edit', 'TasksController@edit');
-Route::put('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@update');
+Route::get('/group/{gId}/activity/{aId}/task/{tId}/edit', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@edit'
+]);
+Route::put('/group/{gId}/activity/{aId}/task/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@update'
+]);
 
 // Create task
-Route::get('/group/{gId}/activity/{aId}/task/create', 'TasksController@create');
-Route::post('/group/{gId}/activity/{aId}/task', 'TasksController@add');
+Route::get('/group/{gId}/activity/{aId}/task/create', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@create'
+]);
+Route::post('/group/{gId}/activity/{aId}/task', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@add'
+]);
 
 // View task
-Route::get('/group/{gId}/activity/{aId}/task/{tId}', 'TasksController@task');
+Route::get('/group/{gId}/activity/{aId}/task/{tId}', [
+    'middleware' => 'auth',
+    'uses' => 'TasksController@task'
+]);
 
 /*
  * Activities
  */
 
 // Delete activity
-Route::get('/group/{gId}/activity/{aId}/delete', 'ActivitiesController@confirmDelete');
-Route::delete('/group/{gId}/activity/{aId}', 'ActivitiesController@delete');
+Route::get('/group/{gId}/activity/{aId}/delete', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@confirmDelete'
+]);
+Route::delete('/group/{gId}/activity/{aId}', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@delete'
+]);
 
 // Edit activity
-Route::get('/group/{gId}/activity/{aId}/edit', 'ActivitiesController@edit');
-Route::put('/group/{gId}/activity/{aId}', 'ActivitiesController@update');
+Route::get('/group/{gId}/activity/{aId}/edit', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@edit'
+]);
+Route::put('/group/{gId}/activity/{aId}', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@update'
+]);
 
 // Create activity
-Route::get('/group/{gId}/activity/create', 'ActivitiesController@create');
-Route::post('/group/{gId}/activity', 'ActivitiesController@add');
-
-// View all activities, including expired
-// Route::get('/activity/archive', 'ActivitiesController@archive');
+Route::get('/group/{gId}/activity/create', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@create'
+]);
+Route::post('/group/{gId}/activity', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@add'
+]);
 
 // View activity
-Route::get('/group/{gId}/activity/{aId}', 'ActivitiesController@activity');
-
-// View all upcoming activities
-// Route::get('/activity', 'ActivitiesController@index');
+Route::get('/group/{gId}/activity/{aId}', [
+    'middleware' => 'auth',
+    'uses' => 'ActivitiesController@activity'
+]);
 
 /*
  * GROUPS
  */
 
 // Delete group
-Route::get('/group/{id}/delete', 'GroupsController@confirmDelete');
-Route::delete('/group/{id}', 'GroupsController@delete');
+Route::get('/group/{id}/delete', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@confirmDelete'
+]);
+Route::delete('/group/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@delete'
+]);
 
 // Edit group
-Route::get('/group/{id}/edit', 'GroupsController@edit');
-Route::put('/group/{id}', 'GroupsController@update');
+Route::get('/group/{id}/edit', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@edit'
+]);
+Route::put('/group/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@update'
+]);
 
 // Create group
-Route::get('/group/create', 'GroupsController@create');
-Route::post('/group', 'GroupsController@add');
+Route::get('/group/create', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@create'
+]);
+Route::post('/group', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@add'
+]);
 
 // View group with expired activities
-Route::get('/group/{id}/archive', 'GroupsController@archive');
+Route::get('/group/{id}/archive', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@archive'
+]);
 
 // View group
-Route::get('/group/{id}', 'GroupsController@group');
+Route::get('/group/{id}', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@group'
+]);
 
 // View all groups
-Route::get('/group', 'GroupsController@index');
+Route::get('/group', [
+    'middleware' => 'auth',
+    'uses' => 'GroupsController@index'
+]);
 
 /*
  * Index
