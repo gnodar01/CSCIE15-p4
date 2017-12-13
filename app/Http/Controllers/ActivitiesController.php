@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App;
+// TODO: this?
+// use App;
 use App\Activity;
-use Debugbar;
 
 class ActivitiesController extends Controller
 {
