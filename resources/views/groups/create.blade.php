@@ -1,8 +1,5 @@
 @extends('layouts.master')
 
-@push('head')
-@endpush
-
 @section('content')
     <h1>Add Group</h1>
 

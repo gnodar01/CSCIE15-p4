@@ -2,9 +2,6 @@
 
 @extends('layouts.master')
 
-@push('head')
-@endpush
-
 @section('content')
     <h1>Activities</h1>
 

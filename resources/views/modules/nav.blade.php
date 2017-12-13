@@ -8,7 +8,6 @@
 <nav>
     <ul>
         <li><a href='/group'>All Groups</a>
-        <li><a href='/group/create'>Add a Group</a>
         @stack('nav')
     </ul>
 </nav>

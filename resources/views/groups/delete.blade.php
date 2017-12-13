@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
-@push('head')
+@push('nav')
+<li><a href='/group/create'>Add a Group</a>
+<li><a href='/group/{{ $group['id'] }}/activity/create'>Add an Activity</a>
 @endpush
 
 @section('content')

@@ -1,9 +1,8 @@
 @extends('layouts.master')
 
-@push('head')
-@endpush
-
 @push('nav')
+<li><a href='/group/create'>Add a Group</a>
+<li><a href='/group/{{ $gId }}/activity/create'>Add an Activity</a>
 {{-- TODO: these --}}
 <li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Task</a>
 <li><a href='/group/{{ $gId }}/activity/{{ $activity['id'] }}'>Add a Role</a>
