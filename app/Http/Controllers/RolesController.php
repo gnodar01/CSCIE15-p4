@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Role;
+use App\Http\helpers;
 
 class RolesController extends Controller
 {
@@ -19,11 +20,17 @@ class RolesController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        return view('roles.role')->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('roles.role')->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -32,11 +39,17 @@ class RolesController extends Controller
     * Create a role
     */
     public function create($gId, $aId) {
-        return view('roles.create')->with([
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('roles.create')->with([
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -50,22 +63,28 @@ class RolesController extends Controller
             'description' => 'required'
         ]);
 
-        $role = new Role();
-        $role->name = $request->input('name');
-        $role->description = $request->input('description');
-        // TODO: this?
-        // $role->group()->associate();
-        $role->activity_id = $aId;
-        // TODO: Fix this
-        $role->user_id = 1;
-        $role->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => 'Your role was added.'
-        ]);
+        if ($access) {
+            $role = new Role();
+            $role->name = $request->input('name');
+            $role->description = $request->input('description');
+            // TODO: this?
+            // $role->group()->associate();
+            $role->activity_id = $aId;
+            // TODO: Fix this
+            $role->user_id = 1;
+            $role->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => 'Your role was added.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -80,12 +99,18 @@ class RolesController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        return view('roles.edit')->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('roles.edit')->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -105,16 +130,22 @@ class RolesController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        $role->name = $request->input('name');
-        $role->description = $request->input('description');
-        $role->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => 'Your changes were saved.'
-        ]);
+        if ($access) {
+            $role->name = $request->input('name');
+            $role->description = $request->input('description');
+            $role->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => 'Your changes were saved.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -129,12 +160,18 @@ class RolesController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        return view('roles.delete')->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('roles.delete')->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -149,13 +186,19 @@ class RolesController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Role not found');
         }
 
-        $role->delete();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
-            'role' => $role,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => $role->name.' was deleted.'
-        ]);
+        if ($access) {
+            $role->delete();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/role/'.$role->id)->with([
+                'role' => $role,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => $role->name.' was deleted.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 }

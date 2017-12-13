@@ -4,26 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use DB;
 use App\Group;
+use App\Http\helpers;
 
 class GroupsController extends Controller
 {
-    protected function validateUser($group) {
-        $currentUser = Auth::user();
-        $users = $group->users()->getResults();
-
-        $access = false;
-
-        foreach ($users as $user) {
-            if ($user->id == $currentUser->id) {
-                $access = true;
-            }
-        }
-
-        return $access;
-    }
-
     /**
      * GET
      * /
@@ -73,7 +58,7 @@ class GroupsController extends Controller
             $activities = $group->activities()->getResults();
         }
 
-        $access = $this->validateUser($group);
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
             return view('groups.group')->with([
@@ -143,7 +128,7 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        $access = $this->validateUser($group);
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
             return view('groups.edit')->with([
@@ -172,7 +157,7 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        $access = $this->validateUser($group);
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
             $group->name = $request->input('name');
@@ -200,7 +185,7 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        $access = $this->validateUser($group);
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
             return view('groups.delete')->with([
@@ -224,7 +209,7 @@ class GroupsController extends Controller
             return redirect('/')->with('alert', 'Group not found');
         }
 
-        $access = $this->validateUser($group);
+        $access = helpers\validateByGroup($group);
 
         if ($access) {
             $group->delete();

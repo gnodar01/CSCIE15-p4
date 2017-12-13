@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Http\helpers;
 
 class TasksController extends Controller
 {
@@ -19,11 +20,17 @@ class TasksController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
-        return view('tasks.task')->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('tasks.task')->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -32,11 +39,17 @@ class TasksController extends Controller
     * Create a task
     */
     public function create($gId, $aId) {
-        return view('tasks.create')->with([
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('tasks.create')->with([
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -50,22 +63,28 @@ class TasksController extends Controller
             'description' => 'required'
         ]);
 
-        $task = new Task();
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
-        // TODO: this?
-        // $task->group()->associate();
-        $task->activity_id = $aId;
-        // TODO: Fix this
-        $task->user_id = 1;
-        $task->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => 'Your task was added.'
-        ]);
+        if ($access) {
+            $task = new Task();
+            $task->name = $request->input('name');
+            $task->description = $request->input('description');
+            // TODO: this?
+            // $task->group()->associate();
+            $task->activity_id = $aId;
+            // TODO: Fix this
+            $task->user_id = 1;
+            $task->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => 'Your task was added.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -80,12 +99,18 @@ class TasksController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
-        return view('tasks.edit')->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('tasks.edit')->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -105,16 +130,22 @@ class TasksController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
-        $task->name = $request->input('name');
-        $task->description = $request->input('description');
-        $task->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => 'Your changes were saved.'
-        ]);
+        if ($access) {
+            $task->name = $request->input('name');
+            $task->description = $request->input('description');
+            $task->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => 'Your changes were saved.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -129,12 +160,18 @@ class TasksController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
-        return view('tasks.delete')->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('tasks.delete')->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId.'/activity/'.$aId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -149,13 +186,19 @@ class TasksController extends Controller
             return redirect('/group/'.$gId.'/activity/'.$aId)->with('alert', 'Task not found');
         }
 
-        $task->delete();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
-            'task' => $task,
-            'gId' => $gId,
-            'aId' => $aId,
-            'alert' => $task->name.' was deleted.'
-        ]);
+        if ($access) {
+            $task->delete();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId.'/task/'.$task->id)->with([
+                'task' => $task,
+                'gId' => $gId,
+                'aId' => $aId,
+                'alert' => $task->name.' was deleted.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 }

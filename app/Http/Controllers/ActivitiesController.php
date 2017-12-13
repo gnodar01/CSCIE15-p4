@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Activity;
 use App\Group;
+use App\Http\helpers;
 
 class ActivitiesController extends Controller
 {
@@ -20,15 +22,21 @@ class ActivitiesController extends Controller
             return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
-        $tasks = $activity->tasks()->with('user')->getResults();
-        $roles = $activity->roles()->with('user')->getResults();
+        $access = helpers\validateByGId($gId);
 
-        return view('activities.activity')->with([
-            'activity' => $activity,
-            'tasks' => $tasks,
-            'roles' => $roles,
-            'gId' => $gId
-        ]);
+        if ($access) {
+            $tasks = $activity->tasks()->with('user')->getResults();
+            $roles = $activity->roles()->with('user')->getResults();
+
+            return view('activities.activity')->with([
+                'activity' => $activity,
+                'tasks' => $tasks,
+                'roles' => $roles,
+                'gId' => $gId
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -43,10 +51,16 @@ class ActivitiesController extends Controller
             return redirect('/group')->with('alert', 'Group not found');
         }
 
-        return view('activities.create')->with([
-            'gId' => $gId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('activities.create')->with([
+                'gId' => $gId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -63,23 +77,29 @@ class ActivitiesController extends Controller
             'date-end' => 'required'
         ]);
 
-        $activity = new Activity();
-        $activity->name = $request->input('name');
-        $activity->description = $request->input('description');
-        $activity->location = $request->input('location');
-        $activity->date_start = $request->input('date-start');
-        $activity->date_end = $request->input('date-end');
-        $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-        $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-        // TODO: this?
-        // $activity->group()->associate($group);
-        $activity->group_id = $gId;
-        $activity->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
-            'activity' => $activity,
-            'alert' => 'Your activity was added.'
-        ]);
+        if ($access) {
+            $activity = new Activity();
+            $activity->name = $request->input('name');
+            $activity->description = $request->input('description');
+            $activity->location = $request->input('location');
+            $activity->date_start = $request->input('date-start');
+            $activity->date_end = $request->input('date-end');
+            $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
+            $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
+            // TODO: this?
+            // $activity->group()->associate($group);
+            $activity->group_id = $gId;
+            $activity->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$activity->id)->with([
+                'activity' => $activity,
+                'alert' => 'Your activity was added.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -94,11 +114,17 @@ class ActivitiesController extends Controller
             return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
-        return view('activities.edit')->with([
-            'activity' => $activity,
-            'gId' => $gId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('activities.edit')->with([
+                'activity' => $activity,
+                'gId' => $gId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -119,21 +145,27 @@ class ActivitiesController extends Controller
 
         if (!$activity) {
             return redirect('/group/'.$gId)->with('alert', 'Activity not found');
-        }        
+        }
 
-        $activity->name = $request->input('name');
-        $activity->description = $request->input('description');
-        $activity->location = $request->input('location');
-        $activity->date_start = $request->input('date-start');
-        $activity->date_end = $request->input('date-end');
-        $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
-        $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
-        $activity->save();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-            'activity' => $activity,
-            'alert' => 'Your changes were saved.'
-        ]);
+        if ($access) {
+            $activity->name = $request->input('name');
+            $activity->description = $request->input('description');
+            $activity->location = $request->input('location');
+            $activity->date_start = $request->input('date-start');
+            $activity->date_end = $request->input('date-end');
+            $activity->time_start = date('H:i:s', strtotime($request->input('time-start')));
+            $activity->time_end = date('H:i:s', strtotime($request->input('time-end')));
+            $activity->save();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with([
+                'activity' => $activity,
+                'alert' => 'Your changes were saved.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -148,11 +180,17 @@ class ActivitiesController extends Controller
             return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
-        return view('activities.delete')->with([
-            'activity' => $activity,
-            'gId' => $gId,
-            'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
-        ]);
+        $access = helpers\validateByGId($gId);
+
+        if ($access) {
+            return view('activities.delete')->with([
+                'activity' => $activity,
+                'gId' => $gId,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$gId : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 
     /**
@@ -167,10 +205,16 @@ class ActivitiesController extends Controller
             return redirect('/group/'.$gId)->with('alert', 'Activity not found');
         }
 
-        $activity->delete();
+        $access = helpers\validateByGId($gId);
 
-        return redirect('/group/'.$gId.'/activity/'.$aId)->with([
-            'alert' => $activity->name.' was deleted.'
-        ]);
+        if ($access) {
+            $activity->delete();
+
+            return redirect('/group/'.$gId.'/activity/'.$aId)->with([
+                'alert' => $activity->name.' was deleted.'
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
     }
 }
