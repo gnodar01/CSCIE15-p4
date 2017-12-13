@@ -3,6 +3,10 @@
 @push('head')
 @endpush
 
+@push('nav')
+<li><a href='/activity/create'>Add an Activity</a>
+@endpush
+
 @section('content')
     <h1>{{ $group['name'] }}</h1>
 
