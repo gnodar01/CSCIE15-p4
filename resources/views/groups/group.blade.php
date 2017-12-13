@@ -16,6 +16,7 @@
         <br>
         <div class="group-actions">
             <a href="/group/{{ $group['id'] }}/edit">Edit</a> |
+            <a href="/group/{{ $group['id'] }}/leave">Leave</a> |
             <a href="/group/{{ $group['id'] }}/delete">Delete</a>
         </div>
     </div>
@@ -30,7 +31,7 @@
     @endforeach
     @endif
 
-    @if(isset($activities) && sizeof($users) > 0)
+    @if(isset($activities) && sizeof($activities) > 0)
     <br>
     <h2>Activities</h2>
     @foreach($activities as $activity)

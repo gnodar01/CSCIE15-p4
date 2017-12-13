@@ -15,6 +15,7 @@
             <div class="group-actions">
                 <a href="/group/{{ $group['id'] }}">View</a> |
                 <a href="/group/{{ $group['id'] }}/edit">Edit</a> |
+                <a href="/group/{{ $group['id'] }}/leave">Leave</a> |
                 <a href="/group/{{ $group['id'] }}/delete">Delete</a>
             </div>
         </div>

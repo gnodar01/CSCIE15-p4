@@ -210,7 +210,7 @@ class ActivitiesController extends Controller
         if ($access) {
             $activity->delete();
 
-            return redirect('/group/'.$gId.'/activity/'.$aId)->with([
+            return redirect('/group/'.$gId)->with([
                 'alert' => $activity->name.' was deleted.'
             ]);
         } else {

@@ -212,6 +212,8 @@ class GroupsController extends Controller
         $access = helpers\validateByGroup($group);
 
         if ($access) {
+            $group->users()->detach();
+            // $group->activities()->delete();
             $group->delete();
 
             return redirect('/group')->with([
@@ -256,8 +258,59 @@ class GroupsController extends Controller
             $group->users()->save($user);
 
             return redirect('/group')->with([
-                'alert' => 'You have joined'.$group->name
+                'alert' => 'You have joined '.$group->name
             ]);
         }
+    }
+
+    /**
+     * GET
+     * /group/{id}/leave
+     * Confirmation to leave group
+     */
+    public function confirmLeave($id) {
+        $user = Auth::user();
+        $group = Group::find($id);
+
+        $access = helpers\validateByGroup($group);
+
+        if ($access) {
+            return view('groups.leave')->with([
+                'group' => $group,
+                'user' => $user,
+                'prevUrl' => url()->previous() == url()->current() ? '/group/'.$id : url()->previous()
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
+    }
+
+    /**
+     * PUT
+     * /group/{id}/leave
+     * Leave group
+     */
+    public function leave($id) {
+        $user = Auth::user();
+        $group = Group::find($id);
+
+        if (!$user) {
+            return redirect('/login')->with([
+                'alert' => 'You need to login to do this'
+            ]);
+        }
+
+        $access = helpers\validateByGroup($group);
+
+        if ($access) {
+            $user->groups()->detach();
+
+            return redirect('/group')->with([
+                'alert' => 'You have left '.$group->name
+            ]);
+        } else {
+            return redirect('/group/')->with('alert', 'You must be a member of the group to do this');
+        }
+
     }
 }

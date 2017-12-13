@@ -10,7 +10,7 @@ class ConnectActivitiesAndRoles extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             $table->integer('activity_id')->unsigned();
-            $table->foreign('activity_id')->references('id')->on('activities');
+            $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
         });
     }
 
