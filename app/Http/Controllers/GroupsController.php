@@ -303,7 +303,7 @@ class GroupsController extends Controller
         $access = helpers\validateByGroup($group);
 
         if ($access) {
-            $user->groups()->detach();
+            $user->groups()->detach($id);
 
             return redirect('/group')->with([
                 'alert' => 'You have left '.$group->name
